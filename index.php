@@ -1,6 +1,7 @@
 <?php
-  include('vendor/autoload.php'); //Подключаем библиотеку;
+  require 'vendor/autoload.php'; //Подключаем библиотеку;
   use Telegram\Bot\Api; 
+
 
   echo "Hello, world";
 
@@ -9,21 +10,29 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Моя библиотека"], ["Найти книгу"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book"]]; //Клавиатура
 
   if ($text == "/start") {
-    $reply = "Добро пожаловать в бота!";
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    echo "aaaasd";
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
 
+    if (!$name)
+    {
+      $reply = "Welcome, stranger!";
+
+      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    }
+
+    else
+    {
+      $reply = "Welcome, " + $name;
+      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    }
   }
 
   elseif ($text == "/help") {
     $reply = "Информация с помощью.";
     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    echo "aaa";
     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-
   }
 ?>
