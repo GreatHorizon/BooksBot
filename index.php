@@ -7,7 +7,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book by title"], ["Say Hello"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book by name"], ["Say Hello"]]; //Клавиатура
 
   if ($text)
   {
@@ -25,15 +25,15 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
 
-    if ($text == "Search book by title")
+    if ($text == "Search book by name")
     {
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-    }
 
-    else
-    {
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
+      if ($text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start")
+      {
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
+      }
     }
   }
     function searchBook($bookName)
@@ -47,6 +47,6 @@
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
-      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. "\nMore information about this book: " .$bookInfo. "";
+      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
     }
 ?>
