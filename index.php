@@ -11,7 +11,7 @@
 
   if ($text == "/start") {
 
-    if (!$name)
+    if ($name == '')
     {
       $reply = "Welcome, stranger!";
 
@@ -19,7 +19,7 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
 
-    else
+    elseif($name !== '')
     {
       $reply = "Welcome, " + $name;
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
