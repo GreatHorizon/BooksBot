@@ -42,11 +42,18 @@
     $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     $bookInfo = json_decode($bookInfo, true);
 
-    //Получаем определенную информацию из массива
-    $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
-    $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
-    $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+    if ($bookInfo["totalItems"] == 0) {
+      return "Write correct name of book";
+    }
+    
+    else {
+      //Получаем определенную информацию из массива
+      $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
+      $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
+      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
-    return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
+      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
+    }
   }
+
 ?>
