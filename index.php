@@ -9,46 +9,44 @@
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
   $keyboard = [["My library"], ["Search book by name"], ["Say Hello"]]; //Клавиатура
 
-  if ($text)
-  {
+  if ($text) {
+    
     if ($text == "Say Hello" or $text == "/start") {
-      if ($name != "")
-      {
+
+      if ($name != "") {
         $reply = "Hello, ". $name . "!";
       }
     
-      else
-      {
+      else {
         $reply = "Hello, stranger!";
       }
+
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
 
-    if ($text == "Search book by name")
-    {
+    if ($text == "Search book by name") {
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
 
-    if ($writeBookName == true and $text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start")
-    {
+    if ($text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start") {
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
-      $writeBookName = false;
     }
   }
-    function searchBook($bookName)
-    {
-      $bookName = str_replace(' ', '+', $bookName);
-      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
-      $bookInfo = json_decode($bookInfo, true);
-      print_r($bookInfo);
 
-      $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
-      $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
-      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+  function searchBook($bookName) { 
+    //Получаем массив с информацией о книге
+    $bookName = str_replace(' ', '+', $bookName);
+    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    $bookInfo = json_decode($bookInfo, true);
 
-      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
-    }
+    //Получаем определенную информацию из массива
+    $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
+    $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
+    $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+
+    return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
+  }
 ?>
