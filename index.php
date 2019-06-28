@@ -7,23 +7,23 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book"], ["Hello"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book"], ["Say Hello"]]; //Клавиатура
 
-  if ($text == "Hello") {
-}
-  if ($name != "")
-    {
-      echo 'aa';
-      $reply = "Welcome, ". $name . "!";
+  if ($text)
+  {
+    if ($text == "Say Hello") {
+      if ($name != "")
+      {
+        $reply = "Hello, ". $name . "!";
+      }
+    
+      else
+      {
+        $reply = "Hello, stranger!";
+      }
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
-
-    else
-    {
-      $reply = "Welcome, stranger!";
-      echo "abbb";
-      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-    }
+  }
+  
 ?>
