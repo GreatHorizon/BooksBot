@@ -11,7 +11,7 @@
 
   if ($text)
   {
-    if ($text == "Say Hello") {
+    if ($text == "Say Hello" or $text == "/start") {
       if ($name != "")
       {
         $reply = "Hello, ". $name . "!";
