@@ -7,29 +7,24 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book"], ["Hello"]]; //Клавиатура
 
-  if ($text == "/start") {
+  if ($text == "Hello") {
 
-    if ($name == '')
-    {
-      $reply = "Welcome, stranger!";
-
-      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-    }
-
-    elseif($name !== '')
+    if (!$name = '')
     {
       $reply = "Welcome, " + $name;
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      echo 'name';
     }
-  }
 
-  elseif ($text == "/help") {
-    $reply = "Информация с помощью.";
-    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    elseif($name = '')
+    {
+      $reply = "Welcome, stranger!";
+      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      echo 'stranger';
+    }
   }
 ?>
