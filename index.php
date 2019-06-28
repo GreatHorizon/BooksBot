@@ -11,14 +11,14 @@
 
   if ($text == "Hello") {
 
-    if (!$name == '')
+    if (!$name = '')
     {
       $reply = "Welcome, " + $name;
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
 
-    elseif($name == '')
+    elseif($name = '')
     {
       $reply = "Welcome, stranger!";
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
