@@ -29,11 +29,13 @@
     {
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      $writeBookName = true;
+    }
 
-      if ($text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start")
-      {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
-      }
+    if ($writeBookName == true and $text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start")
+    {
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
+      $writeBookName = false;
     }
   }
     function searchBook($bookName)
