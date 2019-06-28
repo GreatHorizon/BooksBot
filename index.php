@@ -7,7 +7,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book"], ["Say Hello"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book by title"], ["Say Hello"]]; //Клавиатура
 
   if ($text)
   {
@@ -24,6 +24,31 @@
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
+
+    if ($text == "Search book by title")
+    {
+      $reply = "Write name of book";
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+    }
+
+    else
+    {
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
+    }
   }
-  
+    function searchBook($bookName)
+    {
+      $bookName = str_replace(' ', '+', $bookName);
+      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+      $bookInfo = json_decode($bookInfo, true);
+      print_r($bookInfo);
+
+      $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
+      $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
+      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+
+      return "Name of the book: ".$bookTitle." \n
+        Author: ".$authors. " \n
+        More information about this book: " .$bookInfo. "";
+    }
 ?>
