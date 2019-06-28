@@ -47,8 +47,6 @@
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
-      return "Name of the book: ".$bookTitle." \n
-        Author: ".$authors. " \n
-        More information about this book: " .$bookInfo. "";
+      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. "\nMore information about this book: " .$bookInfo. "";
     }
 ?>
