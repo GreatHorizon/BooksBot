@@ -63,9 +63,9 @@
   $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
   
   $data = [
-    "username" => "admiфывыв",
+    "username" => "admi",
     "email" => "John",
-    "password" => 'Doe'
+    "password" => 'Doeы'
   ];
 
   $id = $db->insert ('user', $data);
