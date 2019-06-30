@@ -24,14 +24,15 @@
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
-
-    if ($text == "Search book by name") {
+    elseif ($text == "Search book by name") {
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
-
-    if ($text !== "Search book by name" and $text !== "Say Hello" and $text !== "My library" and $text !== "/start") {
+    elseif ($text == "My Library") {
+      // TODO: implement method
+    }
+    else {
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
     }
   }
@@ -45,14 +46,14 @@
     if ($bookInfo["totalItems"] == 0) {
       return "Write correct name of book";
     }
-    
+
     else {
       //Получаем определенную информацию из массива
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
-      return "Name of the book: ".$bookTitle."\nAuthor: ".$authors. " \nMore information about this book: " .$bookInfo. "";
+      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
 
