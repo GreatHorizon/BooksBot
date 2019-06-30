@@ -1,5 +1,6 @@
 <?php
   require 'vendor/autoload.php'; //Подключаем библиотеку;
+  
   include('url_handler.php');
 
   use Telegram\Bot\Api; 
