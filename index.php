@@ -1,5 +1,7 @@
 <?php
   require 'vendor/autoload.php'; //Подключаем библиотеку;
+  include('url_handler.php');
+
   use Telegram\Bot\Api; 
 
   $telegram = new Api('680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE'); //Устанавливаем токен, полученный у BotFather
@@ -55,6 +57,19 @@
 
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
+  }
+  
+  $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
+  
+  $data = [
+    "login" => "admin",
+    "firstName" => "John",
+    "lastName" => 'Doe'
+  ];
+  $id = $db->insert ('users', $data);
+  if ($id)
+  {
+    echo 'user was created. Id=' . $id;
   }
 
 ?>
