@@ -29,7 +29,7 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
-    elseif ($text == "My Library") {
+    elseif ($text == "My library") {
       // TODO: implement method
     }
     else {
