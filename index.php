@@ -63,12 +63,12 @@
   $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
   
   $data = [
-    "login" => "admiфывыв",
-    "firstName" => "John",
-    "lastName" => 'Doe'
+    "username" => "admiфывыв",
+    "email" => "John",
+    "password" => 'Doe'
   ];
 
-  $id = $db->insert ('users', $data);
+  $id = $db->insert ('user', $data);
   if ($id)
   {
     echo 'user was created. Id=' . $id;
