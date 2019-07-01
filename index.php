@@ -64,10 +64,11 @@
 
       $data = [
         "book_name" => $bookTitle,
-        "book_author" => $authors
+        "book_author" => $authors,
+        "chat_id" => $chat_id
       ];
 
-      $db->insert ('booksearchhistory', $data);
+      $db->insert ('searhc_history', $data);
   
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
