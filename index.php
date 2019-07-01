@@ -64,7 +64,8 @@
 
       $data = [
         "book_name" => $bookTitle,
-        "book_author" => $authors
+        "book_author" => $authors,
+        "chat_id" => $chat_id
       ];
 
       $id = $db->insert ('booksearchhistory', $data);
