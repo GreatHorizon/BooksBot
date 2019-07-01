@@ -37,8 +37,7 @@
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where ("book_name", 'Война и мир');
       $user = $db->getOne ("booksearchhistory");
-      echo $user["book_author"];
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user, 'reply_markup' => $reply_markup ]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user["book_author"], 'reply_markup' => $reply_markup ]);
     }
 
     else {
