@@ -10,7 +10,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
+  $keyboard = [["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
 
   if ($text) {
     
@@ -32,14 +32,12 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
-    elseif ($text == "My library") {
-      // TODO: implement method
-    }
-
-    elseif ($text == "Show history")
+    elseif ($text == "Show author of war and peace from data base")
     {
-      $db->where ("book_name", "Война и мир");
+      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
+      $db->where ("book_name", 'Война и мир');
       $user = $db->getOne ("booksearchhistory");
+      echo $user["book_author"];
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user, 'reply_markup' => $reply_markup ]);
     }
 
@@ -69,10 +67,10 @@
         "book_name" => $bookTitle,
         "book_author" => $authors
       ];
+
       $id = $db->insert ('booksearchhistory', $data);
   
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
-  
 ?>
