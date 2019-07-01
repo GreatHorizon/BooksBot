@@ -10,7 +10,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
+  $keyboard = [["Search book by name"], ["Say Hello"], ["Show author of war and peace from data base"]]; //Клавиатура
 
   if ($text) {
     
