@@ -68,7 +68,7 @@
         "chat_id" => $chat_id
       ];
 
-      $id = $db->insert ('heroku_2cd2894cd704696.search_history', $data);
+      $id = $db->insert ('search_history', $data);
       var_dump($id);
   
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
