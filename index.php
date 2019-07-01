@@ -10,7 +10,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["My library"], ["Search book by name"], ["Say Hello"]]; //Клавиатура
+  $keyboard = [["My library"], ["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
 
   if ($text) {
     
@@ -35,6 +35,14 @@
     elseif ($text == "My library") {
       // TODO: implement method
     }
+
+    elseif ($text == "Show history")
+    {
+      $db->where ("book_name", "Война и мир");
+      $user = $db->getOne ("booksearchhistory");
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user, 'reply_markup' => $reply_markup ]);
+    }
+
     else {
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
     }
@@ -56,11 +64,11 @@
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
+
       $data = [
         "book_name" => $bookTitle,
         "book_author" => $authors
       ];
-
       $id = $db->insert ('booksearchhistory', $data);
   
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
