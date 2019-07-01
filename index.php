@@ -69,6 +69,15 @@
   ];
 
   $id = $db->insert ('user', $data);
+  
+  $data = [
+    "username" => "ad",
+    "email" => "Joh",
+    "password" => 'Do'
+  ];
+
+  $id = $db->insert ('user', $data);
+
   if ($id)
   {
     echo 'user was created. Id=' . $id;
