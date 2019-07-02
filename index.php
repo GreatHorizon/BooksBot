@@ -61,7 +61,7 @@
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
+      
       $data = [
         "book_name" => $bookTitle,
         "book_author" => $authors,
@@ -69,6 +69,6 @@
       ];
 
       $db->insert ('heroku_2cd2894cd704696.searhc_history', $data);
-
+      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
