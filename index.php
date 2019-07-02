@@ -65,37 +65,35 @@
       $db->where("user_id", '560463324');
       $record = $db->getOne('book_history');
       
-      //Заносим книгу в базу
       if ($record)
       //Добавляем нового пользователя
       {
         $userHistory = [
-        'user_id' => "560463324",
+        'user_id' => $chat_id,
         'first_book_slot' => $record['second_book_slot'],
         'second_book_slot' => $record['third_book_slot'],
         'third_book_slot' => $record['fourth_book_slot'],
         'fourth_book_slot' => $record['fifth_book_slot'],
-        'fifth_book_slot' => "Иметь или быть"
+        'fifth_book_slot' => $bookTitle
         ];
 
-        $db->where("user_id", '560463324');
+        $db->where("user_id", $chat_id);
         $db->delete('book_history');
-
         $db->insert('book_history', $userHistory);
       }
 
       else
       {
         $newUser = [
-          'user_id' => "560463324",
+          'user_id' => $chat_id,
           'first_book_slot' => 'empty',
           'second_book_slot' => 'empty',
           'third_book_slot' => 'empty',
           'fourth_book_slot' => 'empty',
-          'fifth_book_slot' => 'Бедная лиза'
+          'fifth_book_slot' => $bookTitle
         ];
     
-        $db->insert ('book_history', $newUser);
+        $db->insert('book_history', $newUser);
       }
 
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
