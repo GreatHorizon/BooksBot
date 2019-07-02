@@ -29,13 +29,13 @@
     elseif ($text == "Search book by name") {
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-      $writeBookName = true;
     }
     elseif ($text == "Show history")
     {
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-      $db->where ("book_name", 'Война и мир');
-      $user = $db->getOne ("booksearchhistory");
+      $db->where ("user_id", $chat_id);
+      $user = $db->getOne ("bookhistory");
+
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user["book_author"], 'reply_markup' => $reply_markup ]);
     }
 
@@ -49,6 +49,7 @@
     $bookName = str_replace(' ', '+', $bookName);
     $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     $bookInfo = json_decode($bookInfo, true);
+    addBookToHistory($bookTitle, $chat_id);
 
     if ($bookInfo["totalItems"] == 0) {
       return "Write correct name of book";
@@ -59,7 +60,6 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookTitle, $chat_id);
       
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
@@ -96,4 +96,13 @@
     
         $db->insert('book_history', $newUser);
       }
+    }
+    $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
+    $db->where ("user_id", '560463324');
+    $user = $db->getOne ("book_history");
+    var_dump($user);
+    $booksArray = array_slice($user, 1);
+    var_dump($booksArray);
+    foreach ($booksArray as $books => $list) {
+      $list = $books . '/n';
     }
