@@ -59,7 +59,7 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      //addBookToHistory($bookName, $chat_id);
+      addBookToHistory($bookTitle, $chat_id);
       
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     } 
