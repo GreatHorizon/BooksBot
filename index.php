@@ -63,7 +63,7 @@
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
      
       $db->where("user_id", $chat_id);
-      $record = $db->getOne('book_history');
+      $record = $db->getOne('heroku_2cd2894cd704696.book_history');
       
       //Заносим книгу в базу
       if (!$record)
@@ -75,10 +75,10 @@
           'second_book_slot' => 'empty',
           'third_book_slot' => 'empty',
           'fourth_book_slot' => 'empty',
-          'fifth_book_slot' => $bookName
+          'fifth_book_slot' => $bookTitle
         ];
     
-        $db->insert ('book_history', $newUser);
+        $db->insert ('heroku_2cd2894cd704696.book_history', $newUser);
       }
 
       else
@@ -88,17 +88,15 @@
           $record['second_book_slot'] = $record['third_book_slot'],
           $record['third_book_slot'] = $record['fourth_book_slot'],
           $record['fourth_book_slot'] = $record['fifth_book_slot'],
-          $record['fifth_book_slot'] = $bookName
+          $record['fifth_book_slot'] = $bookTitle
         ];
 
-        $db->update('book_history', $data);
+        $db->update('heroku_2cd2894cd704696.book_history', $data);
       }
 
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
-  
-  
   
 
   
