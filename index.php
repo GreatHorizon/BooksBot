@@ -1,7 +1,6 @@
 <?php
   require 'vendor/autoload.php'; //Подключаем библиотеку;
 
-  const $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
 
   use Telegram\Bot\Api; 
 
@@ -60,12 +59,13 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookName, $chat_id)
+      addBookToHistory($bookName, $chat_id);
       
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     } 
 
     function addBookToHistory($bookName, $chat_id) {
+      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where("user_id", $chat_id);
       $record = $db->getOne('book_history');
       
