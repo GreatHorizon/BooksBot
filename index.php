@@ -62,7 +62,7 @@
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
      
-      $db->where("user_id", '560463324');
+      $db->where("user_id", $chat_id);
       $record = $db->getOne('book_history');
       
       if ($record)
