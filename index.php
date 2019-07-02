@@ -68,8 +68,7 @@
         "chat_id" => $chat_id,
       ];
 
-      $db->insert ('searhc_history', $data);
-  
-      
+      $db->insert ('heroku_2cd2894cd704696.searhc_history', $data);
+
     }
   }
