@@ -64,7 +64,7 @@
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
-      function addBookToHistory($bookName, $chat_id) {
+      function addBookToHistory($bookTitle, $chat_id) {
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where("user_id", $chat_id);
       $record = $db->getOne('book_history');
