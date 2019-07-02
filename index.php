@@ -60,45 +60,44 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
      
-      $db->where("user_id", $chat_id);
+      $db->where("user_id", '560463324');
       $record = $db->getOne('book_history');
       
       //Заносим книгу в базу
-      if (!$record)
+      if ($record)
       //Добавляем нового пользователя
       {
+        $userHistory = [
+        'user_id' => "560463324",
+        'first_book_slot' => $record['second_book_slot'],
+        'second_book_slot' => $record['third_book_slot'],
+        'third_book_slot' => $record['fourth_book_slot'],
+        'fourth_book_slot' => $record['fifth_book_slot'],
+        'fifth_book_slot' => "Иметь или быть"
+        ];
+
+        $db->where("user_id", '560463324');
+        $db->delete('book_history');
+
+        $db->insert('book_history', $userHistory);
+      }
+
+      else
+      {
         $newUser = [
-          'user_id' => $chat_id,
+          'user_id' => "560463324",
           'first_book_slot' => 'empty',
           'second_book_slot' => 'empty',
           'third_book_slot' => 'empty',
           'fourth_book_slot' => 'empty',
-          'fifth_book_slot' => $bookTitle
+          'fifth_book_slot' => 'Бедная лиза'
         ];
     
         $db->insert ('book_history', $newUser);
       }
 
-      else
-      {
-        $record = [
-          $record['first_book_slot'] = $record['second_book_slot'],
-          $record['second_book_slot'] = $record['third_book_slot'],
-          $record['third_book_slot'] = $record['fourth_book_slot'],
-          $record['fourth_book_slot'] = $record['fifth_book_slot'],
-          $record['fifth_book_slot'] = $bookTitle
-        ];
-
-        $db->update('book_history', $data);
-      }
-
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
-  
-
-  
-  
