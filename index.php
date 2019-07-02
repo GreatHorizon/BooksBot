@@ -32,14 +32,7 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
-    elseif ($text == "Show author of war and peace from data base")
-    {
-      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-      $db->where ("book_name", 'Война и мир');
-      $user = $db->getOne ("booksearchhistory");
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $user["book_author"], 'reply_markup' => $reply_markup ]);
-    }
-
+    
     else {
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
     }
@@ -65,7 +58,7 @@
       $data = [
         "book_name" => $bookTitle,
         "book_author" => $authors,
-        "chat_id" => $chat_id
+        "chat_id" => $chat_id,
       ];
 
       $db->insert ('searhc_history', $data);
@@ -73,4 +66,3 @@
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
-?>
