@@ -63,7 +63,7 @@
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
      
       $db->where("user_id", $chat_id);
-      $record = $db->getOne('heroku_2cd2894cd704696.book_history');
+      $record = $db->getOne('book_history');
       
       //Заносим книгу в базу
       if (!$record)
@@ -78,7 +78,7 @@
           'fifth_book_slot' => $bookName
         ];
     
-        $db->insert ('heroku_2cd2894cd704696.book_history', $newUser);
+        $db->insert ('book_history', $newUser);
       }
 
       else
@@ -91,7 +91,7 @@
           $record['fifth_book_slot'] = $bookName
         ];
 
-        $db->update('heroku_2cd2894cd704696.book_history', $data);
+        $db->update('book_history', $data);
       }
 
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
