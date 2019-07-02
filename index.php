@@ -1,7 +1,7 @@
 <?php
   require 'vendor/autoload.php'; //Подключаем библиотеку;
 
-
+  const $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
 
   use Telegram\Bot\Api; 
 
@@ -10,7 +10,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Search book by name"], ["Say Hello"], ["Show author of war and peace from data base"]]; //Клавиатура
+  $keyboard = [["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
 
   if ($text) {
     
@@ -32,7 +32,7 @@
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
       $writeBookName = true;
     }
-    elseif ($text == "Show author of war and peace from data base")
+    elseif ($text == "Show history")
     {
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where ("book_name", 'Война и мир');
@@ -41,11 +41,11 @@
     }
 
     else {
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text, $chat_id)]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text, $chat_id)]);
     }
   }
 
-  function searchBook($bookName, $chat_id) { 
+  function workWithBook($bookName, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
     $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
@@ -60,14 +60,16 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-     
+      addBookToHistory($bookName, $chat_id)
+      
+      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
+    } 
+
+    function addBookToHistory($bookName, $chat_id) {
       $db->where("user_id", $chat_id);
       $record = $db->getOne('book_history');
       
-      if ($record)
-      //Добавляем нового пользователя
-      {
+      if ($record) {
         $userHistory = [
         'user_id' => $chat_id,
         'first_book_slot' => $record['second_book_slot'],
@@ -76,14 +78,13 @@
         'fourth_book_slot' => $record['fifth_book_slot'],
         'fifth_book_slot' => $bookTitle
         ];
-
+          
         $db->where("user_id", $chat_id);
         $db->delete('book_history');
         $db->insert('book_history', $userHistory);
-      }
+        }
 
-      else
-      {
+      else {
         $newUser = [
           'user_id' => $chat_id,
           'first_book_slot' => 'empty',
@@ -95,7 +96,5 @@
     
         $db->insert('book_history', $newUser);
       }
-
-      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
