@@ -41,11 +41,11 @@
     }
 
     else {
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text)]);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => searchBook($text, $chat_id)]);
     }
   }
 
-  function searchBook($bookName) { 
+  function searchBook($bookName, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
     $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
@@ -69,7 +69,7 @@
       ];
 
       $db->insert ('search_history', $data);
-      
+
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
