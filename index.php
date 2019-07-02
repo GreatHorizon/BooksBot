@@ -72,4 +72,4 @@
     "chat_id" => $chat_id,
   ];
 
-  $db->insert ('heroku_2cd2894cd704696.search_history', $data);
+  $db->insert ('search_history', $data);
