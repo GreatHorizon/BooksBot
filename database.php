@@ -28,6 +28,7 @@
 
   function getInfoFromTable($table, $chatId)
   {
+    $db = getBd();
     $db->where(userId, $chatId);
     $bookHistoryArray = $db->getOne($table);
   }
