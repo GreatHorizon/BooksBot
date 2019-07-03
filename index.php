@@ -9,7 +9,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Say Hello"], ["Show history"]]; //Клавиатура
+  $keyboard = [["Say Hello"], ["Show history"], ["Help"]]; //Клавиатура
 
   if ($text) {
     
@@ -26,8 +26,8 @@
       $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
-    elseif ($text == "Search book by name") {
-      $reply = "Write name of book";
+    elseif ($text == "Help") {
+      $reply = "Данный бот может найти по введенному названию\nДля более точного поиска введите дополнительно автора в формате:\nМы\nЗамятин";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
 
