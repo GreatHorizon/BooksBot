@@ -1,125 +1,94 @@
 <?php
-  require 'vendor/autoload.php'; //Подключаем библиотеку;
+  require 'vendor/autoload.php';
+  require_once('database.php');
+  require_once('telegramAPI.php');
 
+  const lineBreak = "\n";
+  const emptySrting = "";
+  const blank = " ";
+  const plus = "+";
+  const hello = "Hello";
+  const startDialog = "/start";
+  const help = "Help";
+  const botOpportunities = "Данный бот может найти по введенному названию\nДля более точного поиска введите дополнительно автора в формате:\nМы\nЗамятин";
+  const showHistory = "Show history";
+  const bookSearchWarning = "Write correct name of book";
 
-  use Telegram\Bot\Api; 
-
-  $telegram = new Api('680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE'); //Устанавливаем токен, полученный у BotFather
-  $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовате
-  $text = $result["message"]["text"]; //Текст сообщения
-  $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-  $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Say Hello"], ["Show history"], ["Help"]]; //Клавиатура
+  $chatId = getChatId(getTelegramData());
+  $name = getUserName(getTelegramData());
+  $text = getText(getTelegramData());
+  $reply_markup = getReplyMarkup();
 
   if ($text) {
-    
-    if ($text == "Say Hello" or $text == "/start") {
+    if ($text == hello or $text == startDialog) {
 
-      if ($name != "") {
-        $reply = "Hello, ". $name . "!";
+      if ($name != emptyString) {
+        $reply = hello . $name . "!";
       }
-    
+
       else {
-        $reply = "Hello, stranger!";
+        $reply = hello . "stranger!";
       }
-
-      $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      sendNewMessage($chatId, $reply, $reply_markup);
     }
+
     elseif ($text == "Help") {
-      $reply = "Данный бот может найти по введенному названию\nДля более точного поиска введите дополнительно автора в формате:\nМы\nЗамятин";
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      $reply = botOpportunities;
+      sendNewMessage($chatId, $reply, $reply_markup);
     }
 
-    elseif ($text == "Show history")
+    elseif ($text == showHistory)
     {
-      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-      $db->where ("user_id", $chat_id);
-      $bookHistory = $db->getOne ("book_history");
+      $db = getBd();
+      $db->where (userId, $chatId);
+      $bookHistory = $db->getOne (bookHistoryTable);
       $bookHistory = array_slice($bookHistory, 1);
       foreach ($bookHistory as $books) {
-        $reply .= $books . "\n";
+        $reply .= $books . lineBreak;
       }
-
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+      sendNewMessage($chatId, $reply, $reply_markup);
     }
-
+    
     else {
-      if (strpos($text, "\n")) {
-        $text = explode("\n", $text);
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text[0], $text[1], $chat_id)]);
+      if (strpos($text, lineBreak)) {
+        $text = explode(lineBreak, $text);
+        $reply = getResponseText($text[0], $text[1], $chatId);
+        sendNewMessage($chatId, $reply, $reply_markup);
       }
-
       else {
-        $bookAuthor = '';
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text, $bookAuthor, $chat_id)]);
+        $bookAuthor = emptyString;
+        $reply = getResponseText($text, $bookAuthor, $chatId);
+        sendNewMessage($chatId, $reply, $reply_markup);
       }
     }
   }
 
-  function workWithBook($bookName, $bookAuthor, $chat_id) { 
-    //Получаем массив с информацией о книге
+  function getResponseText($bookName, $bookAuthor, $chatId) { 
+    $bookInfo = getBookInfo($bookName, $bookAuthor, $chatId);
+    if ($bookInfo["totalItems"] == 0) {
+      return bookSearchWarning;
+    }
+    else {
+      $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
+      $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
+      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+      addBookToHistory($bookTitle, $chatId);
+      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
+    }
+  }
+
+  function getBookInfo($bookName, $bookAuthor, $chatId): array { 
     $bookName = str_replace(' ', '+', $bookName);
-    if ($bookAuthor == '') {
+    if ($bookAuthor == emptySrting) {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
-
     else
     {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
-
-    $bookInfo = json_decode($bookInfo, true);
-    
-    if ($bookInfo["totalItems"] == 0) {
-      return "Write correct name of book";
-    }
-
-    else {
-      //Получаем определенную информацию из массива
-      $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
-      $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
-      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookTitle, $chat_id);
-      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
-    }
+    return json_decode($bookInfo, true);
   }
-      function addBookToHistory($bookTitle, $chat_id) {
-      $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-      $db->where("user_id", $chat_id);
-      $$bookHistoryArray = $db->getOne('book_history');
-      
-      if ($record) {
-        $userHistory = [
-        'user_id' => $chat_id,
-        'first_book_slot' => $bookHistoryArray['second_book_slot'],
-        'second_book_slot' => $bookHistoryArray['third_book_slot'],
-        'third_book_slot' => $bookHistoryArray['fourth_book_slot'],
-        'fourth_book_slot' => $bookHistoryArray['fifth_book_slot'],
-        'fifth_book_slot' => $bookTitle
-        ];
 
-        $db->where("user_id", $chat_id);
-        $db->delete('book_history');
-        $db->insert('book_history', $userHistory);
-      }
-
-      else {
-        $newUser = [
-          'user_id' => $chat_id,
-          'first_book_slot' => 'empty',
-          'second_book_slot' => 'empty',
-          'third_book_slot' => 'empty',
-          'fourth_book_slot' => 'empty',
-          'fifth_book_slot' => $bookTitle
-        ];
-    
-        $db->insert('book_history', $newUser);
-      }
-    }
-    $string = "Мы
-    Замятин";
-    if (strpos($string, "\n")){
-    $string = explode("\n", $string);
-    var_dump($string);
-    }
+  function sendNewMessage($chatId, $reply, $reply_markup) {
+    getTelegramData()->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
+  }
