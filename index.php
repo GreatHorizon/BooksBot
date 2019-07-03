@@ -9,7 +9,7 @@
   $text = $result["message"]["text"]; //Текст сообщения
   $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-  $keyboard = [["Search book by name"], ["Say Hello"], ["Show history"]]; //Клавиатура
+  $keyboard = [["Say Hello"], ["Show history"]]; //Клавиатура
 
   if ($text) {
     
@@ -68,6 +68,7 @@
     {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
+
     $bookInfo = json_decode($bookInfo, true);
     
     if ($bookInfo["totalItems"] == 0) {
