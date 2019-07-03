@@ -11,15 +11,15 @@ function getReplyMarkup() {
     return getTelegramData()->replyKeyboardMarkup([ 'keyboard' => getKeyboard(getTelegramData()), 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
 }
 
-function getText(aray $result): string {
+function getText(object $result): string {
     return $result["message"]["text"]; //Текст сообщения
 }
 
-function getChatId(aray $result): string {
+function getChatId(object $result): string {
     return $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
 }
 
-function getUserName(aray $result): string {
+function getUserName(object $result): string {
     return $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
 }
 
