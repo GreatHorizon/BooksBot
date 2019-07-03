@@ -16,11 +16,11 @@ function getText(object $result): string {
 }
 
 function getChatId(object $result): string {
-    return $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    return $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
 }
 
 function getUserName(object $result): string {
-    return $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    return $result["message"]["from"]["username"]; //Юзернейм пользователя
 }
 
 function getKeyboard() {
