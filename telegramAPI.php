@@ -23,6 +23,6 @@ function getUserName(object $result): string {
     return $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
 }
 
-function getKeyboard(): string {
+function getKeyboard() {
     return $keyboard = [["Hello"], ["Show history"], ["Help"]]; //Клавиатура
 }
