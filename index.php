@@ -45,7 +45,7 @@
     }
 
     else {
-      if (strpos($text, '\n')) {
+      if (strpos($text, "\n")) {
         explode("\n", $text);
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text[0], $text[1], $chat_id)]);
       }
@@ -118,7 +118,7 @@
     }
     $string = "Мы
     Замятин";
-    if (strpos($string, '\n')){
-    $string = explode("/", $string);
+    if (strpos($string, "\n")){
+    $string = explode("\n", $string);
     var_dump($string);
     }
