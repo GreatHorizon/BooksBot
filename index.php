@@ -51,11 +51,9 @@
   function workWithBook($bookName, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
-    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&filter=full&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     $bookInfo = json_decode($bookInfo, true);
     
-    
-
     if ($bookInfo["totalItems"] == 0) {
       return "Write correct name of book";
     }
@@ -83,7 +81,6 @@
         'fourth_book_slot' => $record['fifth_book_slot'],
         'fifth_book_slot' => $bookTitle
         ];
-          
         $db->where("user_id", $chat_id);
         $db->delete('book_history');
         $db->insert('book_history', $userHistory);
