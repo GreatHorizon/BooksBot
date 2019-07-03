@@ -15,13 +15,13 @@
   function addBookToHistory($bookTitle, $chatId) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
-      $updatedUserInfo = changeUserHistory();
+      $updatedUserInfo = changeUserHistory($chatId);
       deleteUserInfo(bookHistoryTable, $chatId);
       insertToBase($updatedUserInfo);
     }
 
     else {
-      $newUser = addUserInfo();
+      $newUser = addUserInfo($chatId);
       insertToBase(bookHistoryTable, $newUser);
     }
   }
@@ -39,7 +39,7 @@
     return $userInfo;
   }
 
-  function addUserInfo() { 
+  function addUserInfo($chatId) { 
     $newUser = [
       userId => $chatId,
       firstBook => emptyField,
@@ -52,7 +52,7 @@
     insertToBase($newUser);
   }
 
-  function changeUserHistory() {
+  function changeUserHistory($chatId) {
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
