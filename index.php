@@ -37,7 +37,7 @@
       $bookHistory = $db->getOne ("book_history");
       $bookHistory = array_slice($bookHistory, 1);
       foreach ($bookHistory as $books) {
-        $reply .= $books . "/n";
+        $reply .= $books . "\n";
       }
 
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
