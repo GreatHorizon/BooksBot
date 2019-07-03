@@ -2,7 +2,7 @@
 
 use Telegram\Bot\Api;
 
-function getTelegramData(): array {
+function getTelegramData(): ?array {
     $telegram = new Api('680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE'); //Устанавливаем токен, полученный у BotFather
     return $telegram -> getWebhookUpdates(); 
 }
