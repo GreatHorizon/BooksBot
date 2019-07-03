@@ -30,6 +30,7 @@
       $reply = "Write name of book";
       $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
     }
+
     elseif ($text == "Show history")
     {
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
@@ -44,14 +45,22 @@
     }
 
     else {
-      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text, $chat_id)]);
+      explode("\n", $text);
+      if (strpos($text, '\n')) {
+        explode("\n", $text);
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text[0], $text[1], $chat_id)]);
+      }
+      else {
+        $bookAuthor = '';
+        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text, $bookAuthor, $chat_id)]);
+      }
     }
   }
 
-  function workWithBook($bookName, $chat_id) { 
+  function workWithBook($bookName, $bookAuthor, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
-    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'.$bookName.'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     $bookInfo = json_decode($bookInfo, true);
     
     if ($bookInfo["totalItems"] == 0) {
@@ -70,21 +79,22 @@
       function addBookToHistory($bookTitle, $chat_id) {
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where("user_id", $chat_id);
-      $record = $db->getOne('book_history');
+      $$bookHistoryArray = $db->getOne('book_history');
       
       if ($record) {
         $userHistory = [
         'user_id' => $chat_id,
-        'first_book_slot' => $record['second_book_slot'],
-        'second_book_slot' => $record['third_book_slot'],
-        'third_book_slot' => $record['fourth_book_slot'],
-        'fourth_book_slot' => $record['fifth_book_slot'],
+        'first_book_slot' => $bookHistoryArray['second_book_slot'],
+        'second_book_slot' => $bookHistoryArray['third_book_slot'],
+        'third_book_slot' => $bookHistoryArray['fourth_book_slot'],
+        'fourth_book_slot' => $bookHistoryArray['fifth_book_slot'],
         'fifth_book_slot' => $bookTitle
         ];
+
         $db->where("user_id", $chat_id);
         $db->delete('book_history');
         $db->insert('book_history', $userHistory);
-        }
+      }
 
       else {
         $newUser = [
@@ -99,13 +109,8 @@
         $db->insert('book_history', $newUser);
       }
     }
-    $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
-    $db->where ("user_id", '560463324');
-    $bookHistory = $db->getOne ("book_history");
-    $bookHistory = array_slice($bookHistory, 1);
-    var_dump($bookHistory);
-
-      foreach ($booksHistory as $books => $reply) {
-        $reply = $books . '/n';
-      }
-      var_dump($reply);
+    $string = "Мы/Замятин";
+    if (strpos($string, '\n')){
+    $string = explode("/", $string);
+    var_dump($string);
+    }
