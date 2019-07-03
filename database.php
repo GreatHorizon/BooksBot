@@ -15,13 +15,13 @@
   function addBookToHistory($bookTitle, $chatId) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
-      $updatedUserInfo = changeUserHistory($chatId);
+      $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
       deleteUserInfo(bookHistoryTable, $chatId);
       insertToBase($updatedUserInfo);
     }
 
     else {
-      $newUser = addUserInfo($chatId);
+      $newUser = addUserInfo($chatId, $bookTitle);
       insertToBase(bookHistoryTable, $newUser);
     }
   }
@@ -34,12 +34,13 @@
   }
 
   function deleteUserInfo($table, $chatId) {
+    $db = getBd();
     $db->where(userId, $chatId);
     $db->delete($table);
     return $userInfo;
   }
 
-  function addUserInfo($chatId) { 
+  function addUserInfo($chatId, $bookTitle) { 
     $newUser = [
       userId => $chatId,
       firstBook => emptyField,
@@ -52,7 +53,7 @@
     insertToBase($newUser);
   }
 
-  function changeUserHistory($chatId) {
+  function changeUserHistory($chatId, $bookTitle) {
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
