@@ -60,7 +60,7 @@
   function workWithBook($bookName, $bookAuthor, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
-    if ($bookAuthor = '') {
+    if ($bookAuthor == '') {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
 
