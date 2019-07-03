@@ -36,7 +36,7 @@
       $db->where ("user_id", $chat_id);
       $bookHistory = $db->getOne ("book_history");
       $bookHistory = array_slice($bookHistory, 1);
-      foreach ($bookHistory as $books => $reply) {
+      foreach ($bookHistory as $books) {
         $reply =  $books;
       }
 
