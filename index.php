@@ -35,9 +35,9 @@
       $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
       $db->where ("user_id", $chat_id);
       $bookHistory = $db->getOne ("bookhistory");
-      $bookHistory = array_slice($user, 1);
+      $bookHistory = array_slice($bookHistory, 1);
       var_dump($booksHistory);
-      foreach ($booksHistory as $books => $list) {
+      foreach ($booksHistory as $books => $reply) {
         $reply = $books . '/n';
       }
 
@@ -105,9 +105,11 @@
     }
     $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b5c433cc63ee73', '290309dc', 'heroku_2cd2894cd704696');
     $db->where ("user_id", '560463324');
-    $user = $db->getOne ("book_history");
-    $booksArray = array_slice($user, 1);
-    var_dump($booksArray);
-    foreach ($booksArray as $books => $list) {
-      $reply = $books . '/n';
-    }
+    $bookHistory = $db->getOne ("book_history");
+    $bookHistory = array_slice($bookHistory, 1);
+    var_dump($bookHistory);
+
+      foreach ($booksHistory as $books => $reply) {
+        $reply = $books . '/n';
+      }
+      var_dump($reply);
