@@ -33,13 +33,13 @@
     $bookHistoryArray = $db->getOne($table);
   }
 
-  function deleteUserInfo($table, $chatId): array {
+  function deleteUserInfo($table, $chatId) {
     $db->where(userId, $chatId);
     $db->delete($table);
     return $userInfo;
   }
 
-  function addUserInfo(): array { 
+  function addUserInfo() { 
     $newUser = [
       userId => $chatId,
       firstBook => emptyField,
@@ -52,14 +52,14 @@
     insertToBase($newUser);
   }
 
-  function changeUserHistory(): array {
+  function changeUserHistory() {
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
       secondBook => $bookHistoryArray[thirdBook],
       thirdBook => $bookHistoryArray[fourthBook],
       fourthBook => $bookHistoryArray[fifthBook],
-      fifthBook => $bookTitle
+      fifthBook => $bookTitle,
     ];
     return $userHistory;
   }
