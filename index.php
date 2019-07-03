@@ -48,7 +48,7 @@
       }
       sendNewMessage($chatId, $reply, $reply_markup);
     }
-    
+
     else {
       if (strpos($text, lineBreak)) {
         $text = explode(lineBreak, $text);
@@ -56,7 +56,7 @@
         sendNewMessage($chatId, $reply, $reply_markup);
       }
       else {
-        $bookAuthor = emptyString;
+        $bookAuthor = emptySrting;
         $reply = getResponseText($text, $bookAuthor, $chatId);
         sendNewMessage($chatId, $reply, $reply_markup);
       }
