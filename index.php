@@ -43,6 +43,7 @@
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
       $bookHistory = array_slice($bookHistory, 1);
+      $reply = '';
       foreach ($bookHistory as $books) {
         $reply .= $books . lineBreak;
       }
