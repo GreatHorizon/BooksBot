@@ -22,7 +22,7 @@
   if ($text) {
     if ($text == hello or $text == startDialog) {
 
-      if ($name != emptyString) {
+      if ($name != emptySrting) {
         $reply = hello . $name . "!";
       }
 
