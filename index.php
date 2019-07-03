@@ -46,9 +46,10 @@
 
     else {
       if (strpos($text, "\n")) {
-        explode("\n", $text);
+        $text = explode("\n", $text);
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text[0], $text[1], $chat_id)]);
       }
+
       else {
         $bookAuthor = '';
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text, $bookAuthor, $chat_id)]);
