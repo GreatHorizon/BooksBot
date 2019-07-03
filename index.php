@@ -60,7 +60,14 @@
   function workWithBook($bookName, $bookAuthor, $chat_id) { 
     //Получаем массив с информацией о книге
     $bookName = str_replace(' ', '+', $bookName);
-    $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    if ($bookAuthor = '') {
+      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    }
+
+    else
+    {
+      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
+    }
     $bookInfo = json_decode($bookInfo, true);
     
     if ($bookInfo["totalItems"] == 0) {
@@ -109,7 +116,7 @@
         $db->insert('book_history', $newUser);
       }
     }
-    $string = "Мы/Замятин";
+    $string = "Мы Замятин";
     if (strpos($string, '\n')){
     $string = explode("/", $string);
     var_dump($string);
