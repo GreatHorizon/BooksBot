@@ -65,6 +65,7 @@
   }
 
   function insertToBase($table, $addingPart) {
+    $db = getBd();
     $db->insert($table, $addingPart);
   }
 
