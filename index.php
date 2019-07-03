@@ -45,7 +45,6 @@
     }
 
     else {
-      explode("\n", $text);
       if (strpos($text, '\n')) {
         explode("\n", $text);
         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => workWithBook($text[0], $text[1], $chat_id)]);
@@ -117,7 +116,8 @@
         $db->insert('book_history', $newUser);
       }
     }
-    $string = "Мы Замятин";
+    $string = "Мы
+    Замятин";
     if (strpos($string, '\n')){
     $string = explode("/", $string);
     var_dump($string);
