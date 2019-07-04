@@ -17,7 +17,7 @@
   $chatId = getChatId(getTelegramData());
   $name = getUserName(getTelegramData());
   $text = getText(getTelegramData());
-  $reply_markup = getReplyMarkup();
+  $reply_markup = getReplyMarkup($keyboard);
 
   if ($text) {
     if ($text == hello or $text == startDialog) {
