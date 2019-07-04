@@ -10,8 +10,8 @@ function getTelegramData($telegram) {
     return $telegram -> getWebhookUpdates(); 
 }
 
-function getReplyMarkup($keyboard) {
-    return getTelegramData()->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+function getReplyMarkup($keyboard, $telegram) {
+    return $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
 }
 
 function getText($result) {
