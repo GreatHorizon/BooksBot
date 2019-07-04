@@ -45,9 +45,11 @@
       $bookHistory = array_slice($bookHistory, 1);
       $reply = '';
       foreach ($bookHistory as $books) {
-        $reply .= $books . lineBreak;
+        if ($books != "empty") {
+          $reply = $books;
+          sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+        }
       }
-      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
 
     else {
