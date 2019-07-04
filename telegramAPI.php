@@ -6,7 +6,7 @@ const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
 $keyboard = [["Hello"], ["Show history"], ["Help"]];
 $telegram = new Api(apiToken);
 
-function getTelegramData() {
+function getTelegramData($telegram) {
     return $telegram -> getWebhookUpdates(); 
 }
 

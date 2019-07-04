@@ -14,9 +14,9 @@
   const showHistory = "Show history";
   const bookSearchWarning = "Write correct name of book";
 
-  $chatId = getChatId(getTelegramData());
-  $name = getUserName(getTelegramData());
-  $text = getText(getTelegramData());
+  $chatId = getChatId(getTelegramData($telegram));
+  $name = getUserName(getTelegramData($telegram));
+  $text = getText(getTelegramData($telegram));
   $reply_markup = getReplyMarkup($keyboard);
 
   if ($text) {
