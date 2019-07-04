@@ -31,6 +31,7 @@
     $db = getBd();
     $db->where(userId, $chatId);
     $bookHistoryArray = $db->getOne($table);
+    return $bookHistoryArray;
   }
 
   function deleteUserInfo($table, $chatId) {
@@ -71,5 +72,5 @@
   }
 
   function getBd() {
-    return $db = new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
+    return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
   }
