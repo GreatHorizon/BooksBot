@@ -10,7 +10,7 @@
   const hello = "Hello";
   const startDialog = "/start";
   const help = "Help";
-  const botOpportunities = "This bot can find books by name of book.\n If you want to find more accurately, you should enter name of book and author in the way:\nМы\nЗамятин";
+  const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
   
   const showHistory = "Show history";
   const bookSearchWarning = "Write correct name of book";
