@@ -42,7 +42,7 @@
       $db = getBd();
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
-      if (!bookHistory) {
+      if (!$bookHistory) {
         $reply = "Your history is empty now. Let`s find books!";
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
