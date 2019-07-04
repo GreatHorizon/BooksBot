@@ -17,7 +17,7 @@
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
       deleteUserInfo(bookHistoryTable, $chatId);
-      insertToBase($updatedUserInfo);
+      insertToBase(bookHistoryTable, $updatedUserInfo);
     }
 
     else {
@@ -50,7 +50,7 @@
       fifthBook => $bookTitle
     ];
     return $newUser;
-    insertToBase($newUser);
+    
   }
 
   function changeUserHistory($chatId, $bookTitle) {
