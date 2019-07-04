@@ -42,13 +42,19 @@
       $db = getBd();
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
-      $bookHistory = array_slice($bookHistory, 1);
-      $reply = '';
-      foreach ($bookHistory as $books) {
-        if ($books != "empty") {
-          $reply = $books;
-          sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+      if (bookHistory) {
+        $bookHistory = array_slice($bookHistory, 1);
+        $reply = '';
+        foreach ($bookHistory as $books) {
+          if ($books != "empty") {
+            $reply = $books;
+            sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+          }
         }
+      }
+      else {
+        $reply = "Your history is empty now. Let`s find books!";
+        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
     }
 
