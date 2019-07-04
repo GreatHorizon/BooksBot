@@ -35,6 +35,7 @@
     elseif ($text == "Help") {
       $reply = botOpportunities;
       sendNewMessage($chatId, $reply, $reply_markup);
+      $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
     }
 
     elseif ($text == showHistory)
@@ -91,5 +92,5 @@
   }
 
   function sendNewMessage($chatId, $reply, $reply_markup) {
-    getTelegramData()->sendMessage([ 'chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
+    getTelegramData()->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
