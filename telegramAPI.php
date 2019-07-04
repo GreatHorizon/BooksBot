@@ -26,5 +26,5 @@ function getUserName(object $result) {
 }
 
 function getKeyboard() {
-    return $keyboard = [["Hello"], ["Show history"], ["Help"]]; //Клавиатура
+    return [["Hello"], ["Show history"], ["Help"]]; //Клавиатура
 }
