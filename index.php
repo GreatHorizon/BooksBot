@@ -7,13 +7,13 @@
   const emptySrting = "";
   const blank = " ";
   const plus = "+";
-  const hello = "Hello";
+  const hello = "Hello, ";
   const startDialog = "/start";
   const help = "Help";
   const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
-  
   const showHistory = "Show history";
-  const bookSearchWarning = "Write correct name of book";
+  const bookSearchWarning = "Write correct title of book";
+  const emptyHistoryReply = "Your history is empty now. Let`s find books!";
 
   $chatId = getChatId(getTelegramData($telegram));
   $name = getUserName(getTelegramData($telegram));
@@ -28,7 +28,7 @@
       }
 
       else {
-        $reply = hello . "stranger!";
+        $reply = hello . ", stranger!";
       }
       sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
@@ -44,14 +44,14 @@
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
       if (!$bookHistory) {
-        $reply = "Your history is empty now. Let`s find books!";
+        $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
       else {
         $bookHistory = array_slice($bookHistory, 1);
         $reply = '';
         foreach ($bookHistory as $books) {
-          if ($books != "empty") {
+          if ($books != emptyField) {
             $reply = $books;
             sendNewMessage($chatId, $reply, $reply_markup, $telegram);
           }
