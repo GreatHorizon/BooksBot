@@ -72,9 +72,9 @@
     else {
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
-      $bookLink = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookLink, $chatId);
-      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookLink . "";
+      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+      addBookToHistory($bookTitle, $chatId);
+      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
 
