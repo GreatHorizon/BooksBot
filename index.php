@@ -29,12 +29,12 @@
       else {
         $reply = hello . "stranger!";
       }
-      sendNewMessage($chatId, $reply, $reply_markup);
+      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
 
     elseif ($text == "Help") {
       $reply = botOpportunities;
-      sendNewMessage($chatId, $reply, $reply_markup);
+      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
 
     elseif ($text == showHistory)
@@ -47,19 +47,19 @@
       foreach ($bookHistory as $books) {
         $reply .= $books . lineBreak;
       }
-      sendNewMessage($chatId, $reply, $reply_markup);
+      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
 
     else {
       if (strpos($text, lineBreak)) {
         $text = explode(lineBreak, $text);
         $reply = getResponseText($text[0], $text[1], $chatId);
-        sendNewMessage($chatId, $reply, $reply_markup);
+        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
       else {
         $bookAuthor = emptySrting;
         $reply = getResponseText($text, $bookAuthor, $chatId);
-        sendNewMessage($chatId, $reply, $reply_markup);
+        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
     }
   }
@@ -90,6 +90,6 @@
     return json_decode($bookInfo, true);
   }
 
-  function sendNewMessage($chatId, $reply, $reply_markup) {
-    getTelegramData()->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
+  function sendNewMessage($chatId, $reply, $reply_markup, $telegram) {
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
