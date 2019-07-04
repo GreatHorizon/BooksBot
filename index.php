@@ -7,7 +7,8 @@
   const emptySrting = "";
   const blank = " ";
   const plus = "+";
-  const hello = "Hello, ";
+  const welcoming = "Hello, ";
+  const hello = "Hello";
   const startDialog = "/start";
   const help = "Help";
   const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
@@ -24,11 +25,11 @@
     if ($text == hello or $text == startDialog) {
 
       if ($name != emptySrting) {
-        $reply = hello . $name . "!";
+        $reply = welcoming . $name . "!";
       }
 
       else {
-        $reply = hello . ", stranger!";
+        $reply = welcoming . ", stranger!";
       }
       sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
