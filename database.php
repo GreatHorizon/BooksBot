@@ -55,6 +55,7 @@
   }
 
   function changeUserHistory($chatId, $bookTitle) {
+    $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
