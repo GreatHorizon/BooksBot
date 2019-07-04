@@ -34,7 +34,7 @@
       sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
 
-    elseif ($text == "Help") {
+    elseif ($text == help) {
       $reply = botOpportunities;
       sendNewMessage($chatId, $reply, $reply_markup, $telegram);
     }
@@ -83,7 +83,7 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookTitle, $chatId);
+      addBookToHistory($bookInfo, $chatId);
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
