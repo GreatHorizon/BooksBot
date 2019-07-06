@@ -16,6 +16,7 @@
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
+      deleteUserInfo(bookHistoryTable, $chatId);
       insertToBase(bookHistoryTable, $updatedUserInfo);
     }
 
@@ -37,6 +38,7 @@
     $db = getBd();
     $db->where(userId, $chatId);
     $db->delete($table);
+    return $userInfo;
   }
 
   function addUserInfo($chatId, $bookTitle) { 
@@ -54,7 +56,6 @@
 
   function changeUserHistory($chatId, $bookTitle) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
-    deleteUserInfo(bookHistoryTable, $chatId);
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
