@@ -91,11 +91,12 @@
         if (strpos($text, lineBreak)) {
           $text = explode(lineBreak, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
-          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
         else {
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
+        }
+        if ($command = "search") {
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
