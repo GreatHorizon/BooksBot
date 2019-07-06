@@ -38,7 +38,6 @@
     $db = getBd();
     $db->where(userId, $chatId);
     $db->delete($table);
-    return $userInfo;
   }
 
   function addUserInfo($chatId, $bookTitle) { 
