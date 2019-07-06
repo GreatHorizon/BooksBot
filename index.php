@@ -98,6 +98,7 @@
           $text = explode(lineBreak, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
         }
+
         else {
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
@@ -105,7 +106,7 @@
         if ($commands == "search") {
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
-        elseif ($commands == "add") {
+        if ($commands == "add") {
           $reply = "You have just added book to your library!";
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
