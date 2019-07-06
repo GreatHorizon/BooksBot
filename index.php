@@ -59,9 +59,9 @@
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $bookPosition = 1;
-            $reply = $i . $books;
+            $reply = $bookPosition . $books;
             sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-            $i++;
+            $bookPosition++;
 
           }
         }
