@@ -134,11 +134,9 @@
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
-          if (!$book == $bookInfo)
+          if ($book == $bookInfo)
           {
-            $booksArray = [ 
-              $book => emptyField,
-            ];
+            $booksArray[$book] = emptyField;
           }
         }
         deleteUserInfo(bookHistoryTable, $chatId);
@@ -171,3 +169,11 @@
     ];
     insertToBase("commands", $command);
   }
+  $booksArray = getInfoFromTable(bookHistoryTable, '560463324');
+  foreach ($booksArray as $book) {
+    if (!$book == 'https://play.google.com/store/books/details?id=3zc1DwAAQBAJ&source=gbs_api')
+    {
+      $booksArray[$book] = emptyField;
+    }
+  }
+  var_dump($booksArray);
