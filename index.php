@@ -104,4 +104,4 @@
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
   
-  deleteUserInfo(bookHistoryTable, "560463324");
+  deleteUserInfo(bookHistoryTable, null);
