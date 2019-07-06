@@ -87,7 +87,7 @@
     }
     else {
       $commands = getInfoFromTable("commands", $chatId)["command"];
-      if ($commands = "add" or $commands = "search") {
+      if ($commands == "add" or $commands == "search") {
         if (strpos($text, lineBreak)) {
           $text = explode(lineBreak, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
@@ -96,7 +96,7 @@
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
-        if ($command = "search") {
+        if ($command == "search") {
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
