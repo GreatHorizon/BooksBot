@@ -137,7 +137,7 @@
           if (!$book == $bookInfo)
           {
             $booksArray = [ 
-              $books => emptyField,
+              $book => emptyField,
             ];
           }
         }
