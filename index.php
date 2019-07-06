@@ -134,15 +134,15 @@
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
-          if ($book == $bookInfo)
+          if (!$book == $bookInfo)
           {
-            $newBooksArray = [ 
+            $booksArray = [ 
               $books => emptyField,
             ];
           }
         }
         deleteUserInfo(bookHistoryTable, $chatId);
-        insertToBase(bookHistoryTable, $newBooksArray);
+        insertToBase(bookHistoryTable, $booksArray);
         deleteUserInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
       }
