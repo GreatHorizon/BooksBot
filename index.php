@@ -86,7 +86,7 @@
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
     else {
-      $commands = getInfoFromTable($table, $chatId)["command"];
+      $commands = getInfoFromTable("commands", $chatId)["command"];
       if ($commands = "add" or $commands = "search") {
         if (strpos($text, lineBreak)) {
           $text = explode(lineBreak, $text);
