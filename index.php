@@ -68,22 +68,41 @@
       $reply = "Choose command";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
+    
+    elseif ($text == "Search")
+    {
+      addCommand($chatId, "search");
+      $reply = "Enter book title";
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
 
-    else {
-      if (strpos($text, lineBreak)) {
-        $text = explode(lineBreak, $text);
-        $reply = getResponseText($text[0], $text[1], $chatId);
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    elseif ($text == "Add book") {
+      $userCommands = getInfoFromTable("commands", $chatId);
+      if ($userCommands) {
+        deleteUserInfo("commands", $chatId);
       }
-      else {
-        $bookAuthor = emptySrting;
-        $reply = getResponseText($text, $bookAuthor, $chatId);
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      addCommand($chatId, "add");
+      $reply = "Enter book title";
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
+    else {
+      $commands = getInfoFromTable($table, $chatId)["command"];
+      if ($commands = "add" or $commands = "search") {
+        if (strpos($text, lineBreak)) {
+          $text = explode(lineBreak, $text);
+          $reply = getResponseText($text[0], $text[1], $chatId, $commands);
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        }
+        else {
+          $bookAuthor = emptySrting;
+          $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        }
       }
     }
   }
 
-  function getResponseText($bookName, $bookAuthor, $chatId) { 
+  function getResponseText($bookName, $bookAuthor, $chatId, $commands) { 
     $bookInfo = getBookInfo($bookName, $bookAuthor, $chatId);
     if ($bookInfo["totalItems"] == 0) {
       return bookSearchWarning;
@@ -92,7 +111,9 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookInfo, $chatId);
+      if ($commands == "add") {
+        addBookToHistory($bookInfo, $chatId);
+      }
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
@@ -112,3 +133,15 @@
   function sendNewMessage($chatId, $reply, $replyMarkup, $telegram) {
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
   }
+
+  
+  function addCommand($chatId, $command)
+      {
+        $command = [
+          "user_id" => $chatId,
+          "command" => $command,
+        ];
+        insertToBase("commands", $command);
+      }
+      $a = getInfoFromTable(bookHistoryTable, "560463324")["user_id"];
+  var_dump($a);

@@ -3,7 +3,7 @@
 use Telegram\Bot\Api;
 
 const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
-$keyboard = [["Hello"], ["My library"], ["Help"]];
+$keyboard = [["Hello"], ["My library"], ["Help"], ["Search"]];
 $libraryKeyboard = [["Show library"], ["Add book"], ["Remove book"], ["Back"]];
 
 
