@@ -51,7 +51,7 @@
       $bookHistory = $db->getOne (bookHistoryTable);
       if (!$bookHistory) {
         $reply = emptyHistoryReply;
-        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
       else {
         $bookHistory = array_slice($bookHistory, 1);
@@ -59,7 +59,7 @@
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $reply = $books;
-            sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+            sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
           }
         }
       }
