@@ -104,6 +104,7 @@
 
   function getResponseText($bookName, $bookAuthor, $chatId, $commands) { 
     $bookInfo = getBookInfo($bookName, $bookAuthor, $chatId);
+    deleteUserInfo("commands", $chatId);
     if ($bookInfo["totalItems"] == 0) {
       return bookSearchWarning;
     }
