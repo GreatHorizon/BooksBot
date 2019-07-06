@@ -99,6 +99,10 @@
         if ($command == "search") {
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
+        elseif ($command == "add") {
+          $reply = "You have just added book to your library!";
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        }
       }
     }
   }
