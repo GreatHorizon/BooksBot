@@ -142,7 +142,7 @@
           }
         }
         deleteUserInfo(bookHistoryTable, $chatId);
-        insertToBase(bookHistoryTable, $booksArray);
+        insertToBase(bookHistoryTable, $newBooksArray);
         deleteUserInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
       }
