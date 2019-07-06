@@ -132,13 +132,13 @@
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
-        foreach ($bookArray as $book) {
+        foreach ($booksArray as $book) {
           if ($book == $bookInfo)
           {
             $book = emptyField;
           }
         }
-        insertToBase(bookHistoryTable, $bookArray);
+        insertToBase(bookHistoryTable, $booksArray);
         $reply = "You have just removed book from your library!";
         sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
