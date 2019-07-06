@@ -104,6 +104,10 @@
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
+      else {
+        $reply = "You should choose command";
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      }
     }
   }
 
