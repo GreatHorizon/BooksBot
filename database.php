@@ -16,7 +16,6 @@
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
-      deleteUserInfo(bookHistoryTable, $chatId);
       insertToBase(bookHistoryTable, $updatedUserInfo);
     }
 
