@@ -42,8 +42,32 @@
 
     elseif ($text == myLibrary)
     {
-      $reply = "choose function";
+      $reply = "Choose function";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
+    }
+    elseif ($text = "Show library") {
+      $commandColumn = getInfoFromTable("commands", $chatId);
+
+      if ($commandColumn)
+      {
+        $db = getBd();
+        $db-where (userId, $chatId);
+        $bookHistory = $db-getOne (bookHistoryTable);
+        if (!$bookHistory) {
+          $reply = emptyHistoryReply;
+          sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+        }
+        else {
+          $bookHistory = array_slice($bookHistory, 1);
+          $reply = '';
+          foreach ($bookHistory as $books) {
+            if ($books != emptyField) {
+              $reply = $books;
+              sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+            }
+          }
+        }
+      }
     }
 
     else {
