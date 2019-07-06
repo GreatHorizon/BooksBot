@@ -45,7 +45,7 @@
       $reply = "Choose function";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
-    elseif ($text = "Show library") {
+    elseif ($text == "Show library") {
       $db = getBd();
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
@@ -63,6 +63,9 @@
           }
         }
       }
+    }
+    elseif ($text == "Back") {
+      sendNewMessage($chatId, $reply, $keyboard, $telegram);
     }
 
     else {

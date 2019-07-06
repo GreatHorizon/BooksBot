@@ -4,7 +4,8 @@ use Telegram\Bot\Api;
 
 const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
 $keyboard = [["Hello"], ["My library"], ["Help"]];
-$libraryKeyboard = [["Show library"], ["Add book"], ["Remove book"]];
+$libraryKeyboard = [["Show library"], ["Add book"], ["Remove book"], ["Back"]];
+
 
 $telegram = new Api(apiToken);
 
