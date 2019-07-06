@@ -12,14 +12,15 @@
   const startDialog = "/start";
   const help = "Help";
   const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
-  const showHistory = "Show history";
+  const myLibrary = "My library";
   const bookSearchWarning = "Write correct title of book";
   const emptyHistoryReply = "Your history is empty now. Let`s find books!";
 
   $chatId = getChatId(getTelegramData($telegram));
   $name = getUserName(getTelegramData($telegram));
   $text = getText(getTelegramData($telegram));
-  $reply_markup = getReplyMarkup($keyboard, $telegram);
+  $replyMarkup = getReplyMarkup($keyboard, $telegram);
+  $libraryKeyboardMarkUp = getReplyMarkup($libraryKeyboard, $telegram);
 
   if ($text) {
     if ($text == hello or $text == startDialog) {
@@ -31,45 +32,29 @@
       else {
         $reply = welcoming . ", stranger!";
       }
-      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == help) {
       $reply = botOpportunities;
-      sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == showHistory)
+    elseif ($text == myLibrary)
     {
-      $db = getBd();
-      $db->where (userId, $chatId);
-      $bookHistory = $db->getOne (bookHistoryTable);
-      if (!$bookHistory) {
-        $reply = emptyHistoryReply;
-        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
-      }
-      else {
-        $bookHistory = array_slice($bookHistory, 1);
-        $reply = '';
-        foreach ($bookHistory as $books) {
-          if ($books != emptyField) {
-            $reply = $books;
-            sendNewMessage($chatId, $reply, $reply_markup, $telegram);
-          }
-        }
-      }
+      sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
     else {
       if (strpos($text, lineBreak)) {
         $text = explode(lineBreak, $text);
         $reply = getResponseText($text[0], $text[1], $chatId);
-        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
       else {
         $bookAuthor = emptySrting;
         $reply = getResponseText($text, $bookAuthor, $chatId);
-        sendNewMessage($chatId, $reply, $reply_markup, $telegram);
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
     }
   }
@@ -100,6 +85,6 @@
     return json_decode($bookInfo, true);
   }
 
-  function sendNewMessage($chatId, $reply, $reply_markup, $telegram) {
-    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
+  function sendNewMessage($chatId, $reply, $replyMarkup, $telegram) {
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
   }
