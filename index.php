@@ -68,7 +68,7 @@
       $reply = "Choose command";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
-    
+
     elseif ($text == "Search")
     {
       addCommand($chatId, "search");
@@ -135,13 +135,12 @@
   }
 
   
-  function addCommand($chatId, $command)
-      {
-        $command = [
-          "user_id" => $chatId,
-          "command" => $command,
-        ];
-        insertToBase("commands", $command);
-      }
+  function addCommand($chatId, $command) {
+    $command = [
+      "user_id" => $chatId,
+      "command" => $command,
+    ];
+    insertToBase("commands", $command);
+  }
       $a = getInfoFromTable(bookHistoryTable, "560463324")["user_id"];
   var_dump($a);
