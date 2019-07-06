@@ -48,7 +48,7 @@
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
-      else {
+      elseif (!$test) {
         $bookHistory = array_slice($bookHistory, 1);
         $reply = '';
         foreach ($bookHistory as $books) {
@@ -103,15 +103,3 @@
   function sendNewMessage($chatId, $reply, $reply_markup, $telegram) {
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
-
-  
-  $newUser = [
-    userId => '592095051',
-    firstBook => emptyField,
-    secondBook => emptyField,
-    thirdBook => emptyField,
-    fourthBook => emptyField,
-    fifthBook => 'https://play.google.com/store/books/details?id=weDkObHhadsC&source=gbs_api'
-  ];
-  insertToBase(bookHistoryTable, $newUser);
-  
