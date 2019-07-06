@@ -48,7 +48,7 @@
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
-      elseif (!$test) {
+      elseif (!$text) {
         $bookHistory = array_slice($bookHistory, 1);
         $reply = '';
         foreach ($bookHistory as $books) {
