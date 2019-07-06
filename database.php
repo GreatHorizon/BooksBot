@@ -74,3 +74,4 @@
   function getBd() {
     return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
   }
+  
