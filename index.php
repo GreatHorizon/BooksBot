@@ -96,10 +96,10 @@
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
-        if ($command == "search") {
+        if ($commands == "search") {
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
-        elseif ($command == "add") {
+        elseif ($commands == "add") {
           $reply = "You have just added book to your library!";
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
