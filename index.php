@@ -139,8 +139,10 @@
           }
         }
         insertToBase(bookHistoryTable, $booksArray);
-        $reply = "You have just removed book from your library!";
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        return "There isn`t that book in your library now!";
+      }
+      else {
+        return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
       }
     }
   }
