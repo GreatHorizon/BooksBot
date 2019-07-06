@@ -42,6 +42,7 @@
 
     elseif ($text == myLibrary)
     {
+      $reply = "choose function";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
