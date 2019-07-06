@@ -58,10 +58,8 @@
         $reply = '';
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
-            $bookPosition = 1;
-            $reply = $bookPosition . $books;
+            $reply = $books;
             sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-            $bookPosition++;
 
           }
         }
@@ -75,7 +73,7 @@
     elseif ($text == "Search")
     {
       addCommand($chatId, "search");
-      $reply = "Enter book title";
+      $reply = "What book do you want to find?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
@@ -85,15 +83,17 @@
         deleteUserInfo("commands", $chatId);
       }
       addCommand($chatId, "add");
-      $reply = "Enter book title";
+      $reply = "What book do you want to add?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
     elseif ($text == "Remove book") {
-
+      addCommand($chatId, "remove");
+      $reply = "What book do you want to remove?";
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
     else {
       $commands = getInfoFromTable("commands", $chatId)["command"];
-      if ($commands == "add" or $commands == "search") {
+      if ($commands == "add" or $commands == "search" or $commands == "remove") {
         if (strpos($text, lineBreak)) {
           $text = explode(lineBreak, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
@@ -130,7 +130,18 @@
       if ($commands == "add") {
         addBookToHistory($bookInfo, $chatId);
       }
-      return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
+      elseif ($commands == "remove") {
+        $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
+        foreach ($bookArray as $book) {
+          if ($book == $bookInfo)
+          {
+            $book = emptyField;
+          }
+        }
+        insertToBase(bookHistoryTable, $bookArray);
+        $reply = "You have just removed book from your library!";
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      }
     }
   }
 
@@ -152,3 +163,4 @@
     ];
     insertToBase("commands", $command);
   }
+ 
