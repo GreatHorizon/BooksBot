@@ -88,7 +88,7 @@
     }
   }
 
-  function getBookInfo($bookName, $bookAuthor, $chatId): array { 
+  function getBookInfo($bookName, $bookAuthor, $chatId): ?array { 
     $bookName = str_replace(' ', '+', $bookName);
     if ($bookAuthor == emptySrting) {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
@@ -103,3 +103,5 @@
   function sendNewMessage($chatId, $reply, $reply_markup, $telegram) {
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
+  
+  
