@@ -48,14 +48,13 @@
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
-      elseif (!$text) {
         $bookHistory = array_slice($bookHistory, 1);
         $reply = '';
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $reply = $books;
             sendNewMessage($chatId, $reply, $reply_markup, $telegram);
-          }
+          
         }
       }
     }
