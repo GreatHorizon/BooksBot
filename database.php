@@ -16,7 +16,6 @@
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
-      deleteUserInfo(bookHistoryTable, $chatId);
       insertToBase(bookHistoryTable, $updatedUserInfo);
     }
 
@@ -55,6 +54,7 @@
 
   function changeUserHistory($chatId, $bookTitle) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
+    deleteUserInfo(bookHistoryTable, $chatId);
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
