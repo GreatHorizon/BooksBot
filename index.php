@@ -66,7 +66,7 @@
     }
     elseif ($text == "Back") {
       $reply = "Choose command";
-      sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     else {
