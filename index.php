@@ -47,7 +47,7 @@
     }
     elseif ($text = "Show library") {
       $db = getBd();
-      $db-where (userId, $chatId);
+      $db->where (userId, $chatId);
       $bookHistory = $db-getOne (bookHistoryTable);
       if (!$bookHistory) {
         $reply = emptyHistoryReply;
