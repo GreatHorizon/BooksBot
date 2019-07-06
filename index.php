@@ -48,7 +48,7 @@
     elseif ($text = "Show library") {
       $db = getBd();
       $db->where (userId, $chatId);
-      $bookHistory = $db-getOne (bookHistoryTable);
+      $bookHistory = $db->getOne (bookHistoryTable);
       if (!$bookHistory) {
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
