@@ -98,7 +98,6 @@
           $text = explode(lineBreak, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
         }
-
         else {
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
@@ -120,7 +119,7 @@
 
   function getResponseText($bookName, $bookAuthor, $chatId, $commands) { 
     $bookInfo = getBookInfo($bookName, $bookAuthor, $chatId);
-    deleteUserInfo("commands", $chatId);
+    
     if ($bookInfo["totalItems"] == 0) {
       return bookSearchWarning;
     }
@@ -130,6 +129,7 @@
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
       if ($commands == "add") {
         addBookToHistory($bookInfo, $chatId);
+        deleteUserInfo("commands", $chatId);
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
@@ -140,9 +140,11 @@
           }
         }
         insertToBase(bookHistoryTable, $booksArray);
+        deleteUserInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
       }
       else {
+        deleteUserInfo("commands", $chatId);
         return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
       }
     }
