@@ -136,9 +136,12 @@
         foreach ($booksArray as $book) {
           if ($book == $bookInfo)
           {
-            $book = emptyField;
+            $newBooksArray = [ 
+              $books => emptyField,
+            ];
           }
         }
+        deleteUserInfo(bookHistoryTable, $chatId);
         insertToBase(bookHistoryTable, $booksArray);
         deleteUserInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
@@ -168,4 +171,3 @@
     ];
     insertToBase("commands", $command);
   }
- 
