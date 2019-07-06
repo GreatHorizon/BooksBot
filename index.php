@@ -103,5 +103,3 @@
   function sendNewMessage($chatId, $reply, $reply_markup, $telegram) {
     $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $reply_markup]);
   }
-  
-  deleteUserInfo(bookHistoryTable, $chatId);
