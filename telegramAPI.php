@@ -29,3 +29,6 @@ function getUserName($result) {
     return $result["message"]["from"]["username"]; //Юзернейм пользователя
 }
 
+function sendNewMessage($chatId, $reply, $replyMarkup, $telegram) {
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
+  }

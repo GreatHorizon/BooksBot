@@ -13,8 +13,8 @@
   const help = "Help";
   const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
   const myLibrary = "My library";
-  const bookSearchWarning = "Write correct title of book";
-  const emptyHistoryReply = "Your history is empty now. Let`s find books!";
+  const bookSearchWarning = "Write correct title";
+  const emptyHistoryReply = "Your library is empty now!";
 
   $chatId = getChatId(getTelegramData($telegram));
   $name = getUserName(getTelegramData($telegram));
@@ -58,8 +58,11 @@
         $reply = '';
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
-            $reply = $books;
+            $bookPosition = 1;
+            $reply = $i . $books;
             sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+            $i++;
+
           }
         }
       }
@@ -84,6 +87,9 @@
       addCommand($chatId, "add");
       $reply = "Enter book title";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
+    elseif ($text == "Remove book") {
+
     }
     else {
       $commands = getInfoFromTable("commands", $chatId)["command"];
@@ -138,13 +144,7 @@
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
     return json_decode($bookInfo, true);
-  }
-
-  function sendNewMessage($chatId, $reply, $replyMarkup, $telegram) {
-    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
-  }
-
-  
+  }  
   function addCommand($chatId, $command) {
     $command = [
       "user_id" => $chatId,
@@ -152,5 +152,3 @@
     ];
     insertToBase("commands", $command);
   }
-      $a = getInfoFromTable(bookHistoryTable, "560463324")["user_id"];
-  var_dump($a);
