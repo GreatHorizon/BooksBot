@@ -48,13 +48,15 @@
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $reply_markup, $telegram);
       }
+
+      else {
         $bookHistory = array_slice($bookHistory, 1);
         $reply = '';
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $reply = $books;
             sendNewMessage($chatId, $reply, $reply_markup, $telegram);
-          
+          }
         }
       }
     }
@@ -82,7 +84,7 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
-      addBookToHistory($bookInfo, $chatId);
+      addBookToHistory($bookTitle, $chatId);
       return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
     }
   }
