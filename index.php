@@ -95,9 +95,6 @@
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
-        if ($commands == "add") {
-          $reply = "You have just added book to your library!";
-        }
       }
 
       else {
@@ -122,8 +119,8 @@
       if ($commands == "add") {
         addBookToHistory($bookInfo, $chatId);
         deleteInfo("commands", $chatId);
+        return "You have just added book to your library!";
       }
-
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         deleteInfo(bookHistoryTable, $chatId);
@@ -163,4 +160,3 @@
     }
     return json_decode($bookInfo, true);
   }
-  
