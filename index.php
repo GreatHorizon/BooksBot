@@ -119,8 +119,9 @@
       if ($commands == "add") {
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
-            return "Такая книга уже есть в библиотеке";
             deleteInfo("commands", $chatId);
+            return "Такая книга уже есть в библиотеке";
+            
           }
         }
         addBookToHistory($bookInfo, $chatId);
