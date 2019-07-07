@@ -117,6 +117,7 @@
     if ($bookInfo["totalItems"] == 0) {
       return bookSearchWarning;
     }
+
     else {
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
@@ -130,16 +131,24 @@
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         deleterInfo(bookHistoryTable, $chatId);
+        $deleteBook = false;
         foreach ($booksArray as $book) {
           if ($book == $bookInfo)
           {
             $booksArray[key($booksArray)] = emptyField;
+            $deleteBook = true;
           }
           next($booksArray);
         }
         insertToBase(bookHistoryTable, $booksArray);
         deleteInfo("commands", $chatId);
-        return "There isn`t that book in your library now!";
+        if ($deleteBook) {
+          return "Книга успешно удалена из библиотеки!";
+        }
+        else {
+          return "Такой книги нет в вашей библиотеке!";
+        }
+        
       }
       else {
         deleteInfo("commands", $chatId);
