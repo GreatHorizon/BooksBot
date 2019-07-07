@@ -116,21 +116,17 @@
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
       if ($commands == "add") {
-        $uniqueBook = true;
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
             deleteInfo("commands", $chatId);
-            $uniqueBook = false;
             return "Такая книга уже есть в библиотеке";
           }
         }
-        if ($uniqueBook) {
-          addBookToHistory($bookInfo, $chatId);
-          deleteInfo("commands", $chatId);
-          return "Вы успешно добавили книгу в библиотеку!";
-        }
-        
+
+        addBookToHistory($bookInfo, $chatId);
+        deleteInfo("commands", $chatId);
+        return "Вы успешно добавили книгу в библиотеку!";
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
