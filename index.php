@@ -66,6 +66,7 @@
 
     elseif ($text == "Back") {
       $reply = "Choose command";
+      deleteInfo("commands", $chatId);
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
