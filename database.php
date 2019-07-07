@@ -33,7 +33,7 @@
     return $bookHistoryArray;
   }
 
-  function deleteUserInfo($table, $chatId) {
+  function deleteInfo($table, $chatId) {
     $db = getBd();
     $db->where(userId, $chatId);
     $db->delete($table);
@@ -54,7 +54,7 @@
 
   function changeUserHistory($chatId, $bookTitle): ?array {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
-    deleteUserInfo(bookHistoryTable, $chatId);
+    deleteInfo(bookHistoryTable, $chatId);
     $userHistory = [
       userId => $chatId,
       firstBook => $bookHistoryArray[secondBook],
@@ -73,4 +73,16 @@
 
   function getBd() {
     return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
+  }
+  function addCommand($chatId, $command) {
+    $command = [
+      "user_id" => $chatId,
+      "command" => $command,
+    ];
+    insertToBase("commands", $command);
+  }
+
+  function updateCommand($table, $chatId, $command) {
+    deleteInfo("commands", $chatId);
+    addCommand($chatId, $command);
   }

@@ -16,12 +16,6 @@
   const bookSearchWarning = "Write correct title";
   const emptyLibraryReply = "Your library is empty now!";
 
-  $chatId = getChatId(getTelegramData($telegram));
-  $name = getUserName(getTelegramData($telegram));
-  $text = getText(getTelegramData($telegram));
-  $replyMarkup = getReplyMarkup($keyboard, $telegram);
-  $libraryKeyboardMarkUp = getReplyMarkup($libraryKeyboard, $telegram);
-
   if ($text) {
     if ($text == hello or $text == startDialog) {
 
@@ -33,19 +27,23 @@
         $reply = welcoming . ", stranger!";
       }
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      deleteInfo("commands", $chatId);
     }
 
     elseif ($text == help) {
       $reply = botOpportunities;
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      deleteInfo("commands", $chatId);
     }
 
-    elseif ($text == myLibrary)
-    {
+    elseif ($text == myLibrary) {
       $reply = "Choose function";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
+      deleteInfo("commands", $chatId);
     }
+
     elseif ($text == "Show library") {
+      deleteInfo("commands", $chatId);
       $db = getBd();
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
@@ -57,18 +55,18 @@
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
+
       if ($reply == emptyLibraryReply) {
         sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
-      
     }
+
     elseif ($text == "Back") {
       $reply = "Choose command";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Search")
-    {
+    elseif ($text == "Search") {
       updateCommand("commands", $chatId, "search");
       $reply = "What book do you want to find?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
@@ -85,6 +83,7 @@
       $reply = "What book do you want to remove?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
+
     else {
       $commands = getInfoFromTable("commands", $chatId)["command"];
       if ($commands == "add" or $commands == "search" or $commands == "remove") {
@@ -121,14 +120,12 @@
 
       if ($commands == "add") {
         addBookToHistory($bookInfo, $chatId);
-        deleteUserInfo("commands", $chatId);
+        deleteInfo("commands", $chatId);
       }
+
       elseif ($commands == "remove") {
-
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
-
-        deleteUserInfo(bookHistoryTable, $chatId);
-
+        deleterInfo(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
           if ($book == $bookInfo)
           {
@@ -136,13 +133,12 @@
           }
           next($booksArray);
         }
-
         insertToBase(bookHistoryTable, $booksArray);
-        deleteUserInfo("commands", $chatId);
+        deleteInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
       }
       else {
-        deleteUserInfo("commands", $chatId);
+        deleteInfo("commands", $chatId);
         return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
       }
     }
@@ -153,21 +149,9 @@
     if ($bookAuthor == emptySrting) {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
-    else
-    {
+    else {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
     return json_decode($bookInfo, true);
-  }  
-  function addCommand($chatId, $command) {
-    $command = [
-      "user_id" => $chatId,
-      "command" => $command,
-    ];
-    insertToBase("commands", $command);
   }
-
-  function updateCommand($table, $chatId, $command) {
-    deleteUserInfo("commands", $chatId);
-    addCommand($chatId, $command);
-  }
+  
