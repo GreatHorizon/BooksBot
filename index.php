@@ -117,9 +117,14 @@
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
       if ($commands == "add") {
-        addBookToHistory($bookInfo, $chatId);
-        deleteInfo("commands", $chatId);
-        return "You have just added book to your library!";
+        foreach ($booksArray as $book) {
+          if ($book == $bookInfo){
+            addBookToHistory($bookInfo, $chatId);
+            deleteInfo("commands", $chatId);
+            return "Вы успешно добавили книгу в библиотеку!";
+          }
+        }
+        return "Такой книги нет в библиотеке";
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
