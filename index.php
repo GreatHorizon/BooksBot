@@ -54,9 +54,13 @@
       foreach ($bookHistory as $books) {
         if ($books != emptyField) {
           $reply = $books;
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
-      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      if ($reply == emptyLibraryReply) {
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      }
+      
     }
     elseif ($text == "Back") {
       $reply = "Choose command";
