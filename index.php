@@ -65,22 +65,19 @@
 
     elseif ($text == "Search")
     {
-      deleteUserInfo("commands", $chatId);
-      addCommand($chatId, "search");
+      updateCommand("commands", $chatId, "search");
       $reply = "What book do you want to find?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Add book") {
-      $userCommands = getInfoFromTable("commands", $chatId);
-      deleteUserInfo("commands", $chatId);
-      addCommand($chatId, "add");
+      updateCommand("commands", $chatId, "add");
       $reply = "What book do you want to add?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
+    
     elseif ($text == "Remove book") {
-      deleteUserInfo("commands", $chatId);
-      addCommand($chatId, "remove");
+      updateCommand("commands", $chatId, "remove");
       $reply = "What book do you want to remove?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
@@ -165,10 +162,7 @@
     ];
     insertToBase("commands", $command);
   }
-  $db = getBd();
-  $db->where (userId, '560463324');
-  $bookHistory = $db->getOne (bookHistoryTable);
-
-  if (!$bookHistory) {
-    echo 'aaa';
+  function updateCommand($table, $chatId, $command) {
+    deleteUserInfo("commands", $chatId);
+    addCommand($chatId, "search");
   }
