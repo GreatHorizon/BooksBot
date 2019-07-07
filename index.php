@@ -126,7 +126,7 @@
 
         addBookToHistory($bookInfo, $chatId);
         deleteInfo("commands", $chatId);
-        return "Вы успешно добавили книгу в библиотеку!";
+        return "Вы успешно добавили книгу в библиотеку!"; 
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
