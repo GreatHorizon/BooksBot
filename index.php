@@ -60,7 +60,6 @@
           if ($books != emptyField) {
             $reply = $books;
             sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-
           }
         }
       }
@@ -132,14 +131,19 @@
         deleteUserInfo("commands", $chatId);
       }
       elseif ($commands == "remove") {
+
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
+
+        deleteUserInfo(bookHistoryTable, $chatId);
+
         foreach ($booksArray as $book) {
           if ($book == $bookInfo)
           {
-            $booksArray[$book] = emptyField;
+            $booksArray[key($booksArray)] = emptyField;
           }
+          next($booksArray);
         }
-        deleteUserInfo(bookHistoryTable, $chatId);
+
         insertToBase(bookHistoryTable, $booksArray);
         deleteUserInfo("commands", $chatId);
         return "There isn`t that book in your library now!";
