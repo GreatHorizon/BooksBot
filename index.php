@@ -75,7 +75,7 @@
       $reply = "What book do you want to add?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
-    
+
     elseif ($text == "Remove book") {
       updateCommand("commands", $chatId, "remove");
       $reply = "What book do you want to remove?";
@@ -162,7 +162,8 @@
     ];
     insertToBase("commands", $command);
   }
+
   function updateCommand($table, $chatId, $command) {
     deleteUserInfo("commands", $chatId);
-    addCommand($chatId, "search");
+    addCommand($chatId, $command);
   }
