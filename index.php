@@ -85,7 +85,7 @@
     elseif ($text == "Remove book") {
       updateCommand("commands", $chatId, "remove");
       $reply = "What book do you want to remove?";
-      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
     else {
