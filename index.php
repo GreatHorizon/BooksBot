@@ -119,12 +119,13 @@
       if ($commands == "add") {
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
-            addBookToHistory($bookInfo, $chatId);
+            return "Такая книга уже есть в библиотеке";
             deleteInfo("commands", $chatId);
-            return "Вы успешно добавили книгу в библиотеку!";
           }
         }
-        return "Такой книги нет в библиотеке";
+        addBookToHistory($bookInfo, $chatId);
+        deleteInfo("commands", $chatId);
+        return "Вы успешно добавили книгу в библиотеку!";
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
