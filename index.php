@@ -14,7 +14,7 @@
   const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
   const myLibrary = "My library";
   const bookSearchWarning = "Write correct title";
-  const emptyHistoryReply = "Your library is empty now!";
+  const emptyLibraryReply = "Your library is empty now!";
 
   $chatId = getChatId(getTelegramData($telegram));
   $name = getUserName(getTelegramData($telegram));
@@ -53,15 +53,16 @@
         $reply = emptyHistoryReply;
         sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
+      
       else {
         $bookHistory = array_slice($bookHistory, 1);
-        $reply = '';
+        $reply = emptyLibraryReply;
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $reply = $books;
-            sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
           }
         }
+        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
     }
     elseif ($text == "Back") {
@@ -172,4 +173,11 @@
       "command" => $command,
     ];
     insertToBase("commands", $command);
+  }
+  $db = getBd();
+  $db->where (userId, '560463324');
+  $bookHistory = $db->getOne (bookHistoryTable);
+
+  if (!$bookHistory) {
+    echo 'aaa';
   }
