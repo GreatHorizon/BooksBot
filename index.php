@@ -10,7 +10,6 @@
   const plus = "+";
   const welcoming = "Добро пожаловать, ";
   const startDialog = "/start";
-  const help = "Помощь";
   const myLibrary = "Моя библиотека";
   const bookSearchWarning = "Книга не найдена, введите корректное название";
   const emptyLibraryReply = "Ваша библиотека пуста!";
@@ -18,7 +17,7 @@
   
 
   if ($text) {
-    if ($text == hello or $text == startDialog) {
+    if ($text == startDialog) {
 
       if ($name != emptySrting) {
         $reply = welcoming . $name . "!";
