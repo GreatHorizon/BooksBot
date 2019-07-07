@@ -120,7 +120,7 @@
 
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
-        deleterInfo(bookHistoryTable, $chatId);
+        $booksArray = deleterInfo(bookHistoryTable, $chatId);
         $deleteBook = false;
         foreach ($booksArray as $book) {
           if ($book == $bookInfo)
