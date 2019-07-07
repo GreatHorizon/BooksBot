@@ -65,6 +65,7 @@
 
     elseif ($text == "Search")
     {
+      deleteUserInfo("commands", $chatId);
       addCommand($chatId, "search");
       $reply = "What book do you want to find?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
@@ -72,14 +73,13 @@
 
     elseif ($text == "Add book") {
       $userCommands = getInfoFromTable("commands", $chatId);
-      if ($userCommands) {
-        deleteUserInfo("commands", $chatId);
-      }
+      deleteUserInfo("commands", $chatId);
       addCommand($chatId, "add");
       $reply = "What book do you want to add?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
     elseif ($text == "Remove book") {
+      deleteUserInfo("commands", $chatId);
       addCommand($chatId, "remove");
       $reply = "What book do you want to remove?";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
@@ -117,6 +117,7 @@
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+
       if ($commands == "add") {
         addBookToHistory($bookInfo, $chatId);
         deleteUserInfo("commands", $chatId);
