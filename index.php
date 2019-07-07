@@ -8,14 +8,13 @@
   const emptySrting = "";
   const blank = " ";
   const plus = "+";
-  const welcoming = "Hello, ";
-  const hello = "Hello";
+  const welcoming = "Добро пожаловать, ";
+  const hello = "Помощь";
   const startDialog = "/start";
-  const help = "Help";
-  const botOpportunities = "This bot can find books by title.\n If you want to find more accurately, you should enter title and author in the way:\nМы\nЗамятин";
-  const myLibrary = "My library";
-  const bookSearchWarning = "Write correct title";
-  const emptyLibraryReply = "Your library is empty now!";
+  const help = "Помощь";
+  const myLibrary = "Моя библиотека";
+  const bookSearchWarning = "Книга не найдена, введите корректное название";
+  const emptyLibraryReply = "Ваша библиотека пуста!";
 
   
 
@@ -27,29 +26,21 @@
       }
 
       else {
-        $reply = welcoming . ", stranger!";
+        $reply = welcoming . ", Незнакомец!";
       }
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       deleteInfo("commands", $chatId);
     }
 
-    elseif ($text == help) {
-      $reply = botOpportunities;
-      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-      deleteInfo("commands", $chatId);
-    }
-
     elseif ($text == myLibrary) {
-      $reply = "Choose function";
+      $reply = "Выберите функцию";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo("commands", $chatId);
     }
 
-    elseif ($text == "Show library") {
+    elseif ($text == "Показать библиотеку") {
       deleteInfo("commands", $chatId);
-      $db = getBd();
-      $db->where (userId, $chatId);
-      $bookHistory = $db->getOne (bookHistoryTable);
+      $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
       $bookHistory = array_slice($bookHistory, 1);
       $reply = emptyLibraryReply;
       foreach ($bookHistory as $books) {
@@ -58,33 +49,32 @@
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
-
       if ($reply == emptyLibraryReply) {
         sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
     }
 
-    elseif ($text == "Back") {
+    elseif ($text == "Назад") {
       $reply = "Choose command";
       deleteInfo("commands", $chatId);
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Search") {
+    elseif ($text == "Найти книгу") {
       updateCommand("commands", $chatId, "search");
-      $reply = "What book do you want to find?";
+      $reply = "Этот бот может найти книгу по названию(для этого введите название книги)\nДля большей точности в поиске, в первую строку введите название книги, во второй автора, таким образом:\nМы\nЗамятин";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Add book") {
+    elseif ($text == "Добавить книгу") {
       updateCommand("commands", $chatId, "add");
-      $reply = "What book do you want to add?";
+      $reply = "Какую книгу вы хотите добавить?";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
-    elseif ($text == "Remove book") {
+    elseif ($text == "Удалить книгу") {
       updateCommand("commands", $chatId, "remove");
-      $reply = "What book do you want to remove?";
+      $reply = "Какую книгу вы хотите удалить?";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
@@ -105,7 +95,7 @@
       }
 
       else {
-        $reply = "You should choose command";
+        $reply = "Выберите команду";
       }
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
@@ -152,7 +142,7 @@
       }
       else {
         deleteInfo("commands", $chatId);
-        return "Name of the book: " . $bookTitle ."\nAuthor: ". $authors . " \nMore information about this book: " . $bookInfo . "";
+        return "Название: " . $bookTitle ."\nАвтор: ". $authors . " \nУзнать больше информации о книге: " . $bookInfo . "";
       }
     }
   }
