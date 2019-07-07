@@ -54,6 +54,12 @@
       }
     }
 
+    elseif ($text == "Очистить библиотеку") {
+      deleteInfo(bookHistoryTable, $chatId);
+      $reply = "Библиотека очищена!";
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
+
     elseif ($text == "Назад") {
       $reply = "Choose command";
       deleteInfo("commands", $chatId);

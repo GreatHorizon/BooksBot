@@ -4,7 +4,7 @@
   const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
   $telegram = new Api(apiToken);
   $keyboard = [["Моя библиотека"], ["Помощь"], ["Найти книгу"]];
-  $libraryKeyboard = [["Показать библиотеку"], ["Добавить книгу"], ["Удалить книгу"], ["Назад"]];
+  $libraryKeyboard = [["Показать библиотеку"], ["Добавить книгу"], ["Удалить книгу"],["Очистить библиотеку"], ["Назад"]];
   $chatId = getChatId(getTelegramData($telegram));
   $name = getUserName(getTelegramData($telegram));
   $text = getText(getTelegramData($telegram));
@@ -15,7 +15,7 @@
   
   
   function getTelegramData($telegram) {
-      return $telegram -> getWebhookUpdates(); 
+      return $telegram -> getWebhookUpdates();
   }
   
   function getReplyMarkup($keyboard, $telegram) {
