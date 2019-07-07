@@ -17,6 +17,14 @@
   const bookSearchWarning = "Write correct title";
   const emptyLibraryReply = "Your library is empty now!";
 
+  $keyboard = [["Hello"], ["My library"], ["Help"], ["Search"]];
+  $libraryKeyboard = [["Show library"], ["Add book"], ["Remove book"], ["Back"]];
+  $chatId = getChatId(getTelegramData($telegram));
+  $name = getUserName(getTelegramData($telegram));
+  $text = getText(getTelegramData($telegram));
+  $replyMarkup = getReplyMarkup($keyboard, $telegram);
+  $libraryKeyboardMarkUp = getReplyMarkup($libraryKeyboard, $telegram);
+  
   if ($text) {
     if ($text == hello or $text == startDialog) {
 
