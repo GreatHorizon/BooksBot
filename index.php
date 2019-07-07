@@ -117,6 +117,7 @@
 
       if ($commands == "add") {
         $uniqueBook = true;
+        $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
             deleteInfo("commands", $chatId);
