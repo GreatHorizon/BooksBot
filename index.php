@@ -1,7 +1,8 @@
 <?php
   require 'vendor/autoload.php';
-  require_once('database.php');
   require_once('telegramAPI.php');
+  require_once('database.php');
+  
 
   const lineBreak = "\n";
   const emptySrting = "";
