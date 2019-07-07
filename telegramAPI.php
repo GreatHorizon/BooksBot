@@ -1,7 +1,7 @@
 <?php
 
   use Telegram\Bot\Api;
-  
+  $telegram = new Api(apiToken);
   const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
   $keyboard = [["Hello"], ["My library"], ["Help"], ["Search"]];
   $libraryKeyboard = [["Show library"], ["Add book"], ["Remove book"], ["Back"]];
@@ -10,7 +10,7 @@
   $text = getText(getTelegramData($telegram));
   $replyMarkup = getReplyMarkup($keyboard, $telegram);
   $libraryKeyboardMarkUp = getReplyMarkup($libraryKeyboard, $telegram);
-  $telegram = new Api(apiToken);
+  
   
   function getTelegramData($telegram) {
       return $telegram -> getWebhookUpdates(); 
