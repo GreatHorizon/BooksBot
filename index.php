@@ -49,21 +49,14 @@
       $db = getBd();
       $db->where (userId, $chatId);
       $bookHistory = $db->getOne (bookHistoryTable);
-      if (!$bookHistory) {
-        $reply = emptyHistoryReply;
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-      }
-      
-      else {
-        $bookHistory = array_slice($bookHistory, 1);
-        $reply = emptyLibraryReply;
-        foreach ($bookHistory as $books) {
-          if ($books != emptyField) {
-            $reply = $books;
-          }
+      $bookHistory = array_slice($bookHistory, 1);
+      $reply = emptyLibraryReply;
+      foreach ($bookHistory as $books) {
+        if ($books != emptyField) {
+          $reply = $books;
         }
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
     elseif ($text == "Back") {
       $reply = "Choose command";
@@ -102,18 +95,15 @@
           $bookAuthor = emptySrting;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
-        if ($commands == "search") {
-          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-        }
         if ($commands == "add") {
           $reply = "You have just added book to your library!";
-          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
       }
+
       else {
         $reply = "You should choose command";
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       }
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
   }
 
