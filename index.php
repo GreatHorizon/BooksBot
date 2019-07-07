@@ -9,7 +9,6 @@
   const blank = " ";
   const plus = "+";
   const welcoming = "Добро пожаловать, ";
-  const hello = "Помощь";
   const startDialog = "/start";
   const help = "Помощь";
   const myLibrary = "Моя библиотека";
@@ -117,16 +116,20 @@
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
       if ($commands == "add") {
+        $uniqueBook = true;
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
             deleteInfo("commands", $chatId);
+            $uniqueBook = false;
             return "Такая книга уже есть в библиотеке";
-            
           }
         }
-        addBookToHistory($bookInfo, $chatId);
-        deleteInfo("commands", $chatId);
-        return "Вы успешно добавили книгу в библиотеку!";
+        if ($uniqueBook) {
+          addBookToHistory($bookInfo, $chatId);
+          deleteInfo("commands", $chatId);
+          return "Вы успешно добавили книгу в библиотеку!";
+        }
+        
       }
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
