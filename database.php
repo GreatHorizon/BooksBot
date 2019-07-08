@@ -86,3 +86,5 @@
     deleteInfo("commands", $chatId);
     addCommand($chatId, $command);
   }
+  
+  

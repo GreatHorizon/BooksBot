@@ -167,3 +167,9 @@
     }
     return json_decode($bookInfo, true);
   }
+
+ 
+  use Telegram\Bot\Api;
+  $telegram = new Api("680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE");
+  $result = $telegram -> getWebhookUpdates();
+  error_log(var_export($result, true));

@@ -3,7 +3,7 @@
   use Telegram\Bot\Api;
   const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
   $telegram = new Api(apiToken);
-  
+
   $keyboard = [["Моя библиотека"], ["Найти книгу"]];
   $libraryKeyboard = [["Показать библиотеку"], ["Добавить книгу"], ["Удалить книгу"],["Очистить библиотеку"], ["Назад"]];
   $chatId = getChatId(getTelegramData($telegram));
