@@ -45,10 +45,12 @@
       $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
       $bookHistory = array_slice($bookHistory, 1);
       $reply = emptyLibraryReply;
-      foreach ($bookHistory as $books) {
-        if ($books != emptyField) {
-          $reply = $books;
-          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+      if ($bookHistory) {
+        foreach ($bookHistory as $books) {
+          if ($books != emptyField) {
+            $reply = $books;
+            sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+          }
         }
       }
       if ($reply == emptyLibraryReply) {
