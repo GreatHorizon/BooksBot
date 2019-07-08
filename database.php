@@ -87,4 +87,3 @@
     addCommand($chatId, $command);
   }
   
-  

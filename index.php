@@ -43,9 +43,9 @@
     elseif ($text == "Показать библиотеку") {
       deleteInfo("commands", $chatId);
       $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
-      $bookHistory = array_slice($bookHistory, 1);
-      $reply = emptyLibraryReply;
+      $reply = 'dsdfsdfsdf';
       if ($bookHistory) {
+        $bookHistory = array_slice($bookHistory, 1);
         foreach ($bookHistory as $books) {
           if ($books != emptyField) {
             $reply = $books;
@@ -173,5 +173,4 @@
     return json_decode($bookInfo, true);
   }
 
- 
- 
+  
