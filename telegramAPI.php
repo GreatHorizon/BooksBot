@@ -15,26 +15,26 @@
  
   
   
-  function getTelegramData($telegram) {
+  function getTelegramData(Api $telegram) {
       return $telegram -> getWebhookUpdates();
   }
   
-  function getReplyMarkup($keyboard, $telegram) {
+  function getReplyMarkup(Array $keyboard, Api $telegram): string{
       return $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
   }
   
-  function getText($result) {
+  function getText(object $result): ?string {
       return $result["message"]["text"]; //Текст сообщения
   }
   
-  function getChatId($result) {
+  function getChatId(object $result): ?int {
       return $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
   }
   
-  function getUserName($result) {
+  function getUserName(object $result):?string {
       return $result["message"]["from"]["username"]; //Юзернейм пользователя
   }
   
-  function sendNewMessage($chatId, $reply, $replyMarkup, $telegram) {
+  function sendNewMessage(int $chatId, string $reply, ?string $replyMarkup, Api $telegram): object {
       $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
     }

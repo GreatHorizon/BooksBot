@@ -11,7 +11,6 @@
       if ($name != EMPTY_STRING) {
         $reply = WELCOMING . $name . "!";
       }
-
       else {
         $reply = WELCOMING . ", Незнакомец!";
       }
@@ -67,11 +66,13 @@
           $text = explode(LINE_BREAK, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
         }
+
         else {
           $bookAuthor = EMPTY_STRING;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
       }
+
       else {
         $reply = CHOOSE_FUNCTION_REPLY;
       }
@@ -99,6 +100,7 @@
             return BOOK_IN_LIBRARY_REPLY;
           }
         }
+
         addBookToHistory($bookInfo, $chatId);
         deleteInfo(COMMANDS_TABLE, $chatId);
         return SUCESSFUL_BOOK_ADDING_REPLY; 
@@ -108,6 +110,7 @@
         $booksArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
         deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
         $deleteBook = false;
+
         if ($booksArray) {
           foreach ($booksArray as $book) {
             if ($book == $bookInfo)
@@ -117,15 +120,19 @@
             }
             next($booksArray);
           }
+
           insertToBase(BOOK_LIBRARY_TABLE, $booksArray);
           deleteInfo(COMMANDS_TABLE, $chatId);
+
           if ($deleteBook) {
             return BOOK_REMOVED_REPLY;
           }
+
           else {
             return NOT_FOUND_LIBRALY_REPLY;
           }
         }
+        
         else {
           return EMPTY_LIBRARY_REPLY;
         }
