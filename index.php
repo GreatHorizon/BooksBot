@@ -14,8 +14,6 @@
   const bookSearchWarning = "Книга не найдена, введите корректное название";
   const emptyLibraryReply = "Ваша библиотека пуста!";
 
-  
-
   if ($text) {
     if ($text == startDialog) {
 
