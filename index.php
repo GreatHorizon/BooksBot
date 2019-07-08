@@ -90,18 +90,18 @@
     else {
       $bookTitle = $bookInfo["items"][0]["volumeInfo"]["title"];
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
-      $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
+      $bookLink = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
       if ($commands == ADD_STATEMENT) {
         $booksArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
         foreach ($booksArray as $book) {
-          if ($book == $bookInfo){
+          if ($book == $bookLink){
             deleteInfo(COMMANDS_TABLE, $chatId);
             return BOOK_IN_LIBRARY_REPLY;
           }
         }
 
-        addBookToHistory($bookInfo, $chatId);
+        addBookToHistory($bookLink, $chatId);
         deleteInfo(COMMANDS_TABLE, $chatId);
         return SUCESSFUL_BOOK_ADDING_REPLY; 
       }
@@ -110,17 +110,15 @@
         $booksArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
         deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
         $deleteBook = false;
-
         if ($booksArray) {
           foreach ($booksArray as $book) {
-            if ($book == $bookInfo)
+            if ($book == $bookLink)
             {
               $booksArray[key($booksArray)] = EMPTY_FIELD;
               $deleteBook = true;
             }
             next($booksArray);
           }
-
           insertToBase(BOOK_LIBRARY_TABLE, $booksArray);
           deleteInfo(COMMANDS_TABLE, $chatId);
 
@@ -132,14 +130,14 @@
             return NOT_FOUND_LIBRALY_REPLY;
           }
         }
-        
+
         else {
           return EMPTY_LIBRARY_REPLY;
         }
       }
       else {
         deleteInfo(COMMANDS_TABLE, $chatId);
-        return "Название: " . $bookTitle ."\nАвтор: ". $authors . " \nУзнать больше информации о книге: " . $bookInfo . "";
+        return "Название: " . $bookTitle ."\nАвтор: ". $authors . " \nУзнать больше информации о книге: " . $bookLink . "";
       }
     }
   }
