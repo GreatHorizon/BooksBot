@@ -10,12 +10,15 @@
   const plus = "+";
   const welcoming = "Добро пожаловать, ";
   const startDialog = "/start";
+  const help = "Помощь";
   const myLibrary = "Моя библиотека";
   const bookSearchWarning = "Книга не найдена, введите корректное название";
   const emptyLibraryReply = "Ваша библиотека пуста!";
 
+  
+
   if ($text) {
-    if ($text == startDialog) {
+    if ($text == hello or $text == startDialog) {
 
       if ($name != emptySrting) {
         $reply = welcoming . $name . "!";
@@ -29,7 +32,7 @@
     }
 
     elseif ($text == myLibrary) {
-      $reply = "Выберите функции";
+      $reply = "Выберите функцию";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo("commands", $chatId);
     }
@@ -164,7 +167,3 @@
     }
     return json_decode($bookInfo, true);
   }
-
-  register_shutdown_function(function () {
-    http_response_code(200);
-  });
