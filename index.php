@@ -37,7 +37,7 @@
 
     elseif ($text == "Показать библиотеку") {
       deleteInfo("commands", $chatId);
-      showHistory($chatId, $reply, $replyMarkup, $telegram);
+      showHistory($chatId, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Очистить библиотеку") {
