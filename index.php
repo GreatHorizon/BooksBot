@@ -18,7 +18,7 @@
   
 
   if ($text) {
-    if ($text == hello or $text == startDialog) {
+    if ($text == startDialog) {
 
       if ($name != emptySrting) {
         $reply = welcoming . $name . "!";
