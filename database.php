@@ -2,15 +2,15 @@
   require_once('const.php');
   
   function addBookToHistory($bookTitle, $chatId) {
-    $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
+    $bookHistoryArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
-      insertToBase(bookHistoryTable, $updatedUserInfo);
+      insertToBase(BOOK_LIBRARY_TABLE, $updatedUserInfo);
     }
 
     else {
       $newUser = addUserInfo($chatId, $bookTitle);
-      insertToBase(bookHistoryTable, $newUser);
+      insertToBase(BOOK_LIBRARY_TABLE, $newUser);
     }
   }
 
@@ -42,8 +42,8 @@
   }
 
   function changeUserHistory($chatId, $bookTitle) {
-    $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
-    deleteInfo(bookHistoryTable, $chatId);
+    $bookHistoryArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
+    deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
     $userHistory = [
       USER_ID => $chatId,
       FIRST_BOOK => $bookHistoryArray[SECOND_BOOK],
@@ -68,16 +68,16 @@
       USER_ID => $chatId,
       COMMAND => $command,
     ];
-    insertToBase("commands", $command);
+    insertToBase(COMMANDS_TABLE, $command);
   }
 
   function updateCommand($table, $chatId, $command) {
-    deleteInfo("commands", $chatId);
+    deleteInfo(COMMANDS_TABLE, $chatId);
     addCommand($chatId, $command);
   }
   
   function showLibrary($chatId, $replyMarkup, $telegram) {
-    $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
+    $bookHistory = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     $reply = emptyLibraryReply;
     if ($bookHistory) {
       $bookHistory = array_slice($bookHistory, 1);

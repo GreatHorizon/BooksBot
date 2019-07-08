@@ -7,8 +7,10 @@
   const FIFTH_BOOK = 'fifth_book_slot';
   const USER_ID = 'user_id';
   const COMMAND = "command";
+  const COMMANDS_TABLE = "commands";
+  const BOOK_LIBRARY_TABLE = 'book_history';
   const emptyField = 'empty';
-  const bookHistoryTable = 'book_history';
+  
   const dataBaseLogin = 'b5c433cc63ee73';
   const dataBaseName = 'heroku_2cd2894cd704696';
   const dataBasePassword = '290309dc';
