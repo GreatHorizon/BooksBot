@@ -30,7 +30,7 @@
       return $result["message"]["chat"]["id"]; 
   }
   
-  function getUserName(object $result):?string {
+  function getUserName(object $result): ?string {
       return $result["message"]["from"]["username"]; 
   }
   
