@@ -1,21 +1,10 @@
 <?php
   require 'vendor/autoload.php';
+  require_once('const.php');
   require_once('telegramAPI.php');
   require_once('database.php');
   require_once('googleAPI.php');
   
-
-  const lineBreak = "\n";
-  const emptySrting = "";
-  const blank = " ";
-  const plus = "+";
-  const welcoming = "Добро пожаловать, ";
-  const startDialog = "/start";
-  const help = "Помощь";
-  const myLibrary = "Моя библиотека";
-  const bookSearchWarning = "Книга не найдена, введите корректное название";
-  const emptyLibraryReply = "Ваша библиотека пуста!";
-
   if ($text) {
     if ($text == startDialog) {
 
