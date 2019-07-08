@@ -16,11 +16,9 @@
   const DB_HOST = 'eu-cdbr-west-02.cleardb.net';
   const LINE_BREAK = "\n";
   const EMPTY_STRING = "";
-  
-  const welcoming = "Добро пожаловать, ";
-  const startDialog = "/start";
-  const help = "Помощь";
-  const myLibrary = "Моя библиотека";
-  const bookSearchWarning = "Книга не найдена, введите корректное название";
-  const emptyLibraryReply = "Ваша библиотека пуста!";
+  const WELCOMING = "Добро пожаловать, ";
+  const START_DIALOG = "/start";
+  const MY_LIBRARY = "Моя библиотека";
+  const BOOK_SEARCH_WARNING = "Книга не найдена, введите корректное название";
+  const EMPTY_LIBRARY_REPLY = "Ваша библиотека пуста!";
   

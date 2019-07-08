@@ -78,7 +78,7 @@
   
   function showLibrary($chatId, $replyMarkup, $telegram) {
     $bookHistory = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
-    $reply = emptyLibraryReply;
+    $reply = EMPTY_LIBRARY_REPLY;
     if ($bookHistory) {
       $bookHistory = array_slice($bookHistory, 1);
       foreach ($bookHistory as $books) {
@@ -88,7 +88,7 @@
         }
       }
     }
-    if ($reply == emptyLibraryReply) {
+    if ($reply == EMPTY_LIBRARY_REPLY) {
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
   }

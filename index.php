@@ -6,20 +6,20 @@
   require_once('googleAPI.php');
   
   if ($text) {
-    if ($text == startDialog) {
+    if ($text == START_DIALOG) {
 
       if ($name != EMPTY_STRING) {
-        $reply = welcoming . $name . "!";
+        $reply = WELCOMING . $name . "!";
       }
 
       else {
-        $reply = welcoming . ", Незнакомец!";
+        $reply = WELCOMING . ", Незнакомец!";
       }
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
       deleteInfo(COMMANDS_TABLE, $chatId);
     }
 
-    elseif ($text == myLibrary) {
+    elseif ($text == MY_LIBRARY) {
       $reply = "Выберите функцию";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo(COMMANDS_TABLE, $chatId);
@@ -83,7 +83,7 @@
     $bookInfo = getBookInfo($bookName, $bookAuthor, $chatId);
     
     if ($bookInfo["totalItems"] == 0) {
-      return bookSearchWarning;
+      return BOOK_SEARCH_WARNING;
     }
 
     else {
@@ -127,7 +127,7 @@
           }
         }
         else {
-          return "Ваша библиотека пуста!";
+          return EMPTY_LIBRARY_REPLY;
         }
       }
       else {
