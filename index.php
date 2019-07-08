@@ -31,7 +31,7 @@
     }
 
     elseif ($text == myLibrary) {
-      $reply = "Выберите функцию";
+      $reply = "Выберите функции";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo("commands", $chatId);
     }
