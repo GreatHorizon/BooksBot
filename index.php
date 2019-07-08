@@ -15,7 +15,10 @@
   const bookSearchWarning = "Книга не найдена, введите корректное название";
   const emptyLibraryReply = "Ваша библиотека пуста!";
 
-  
+   use Telegram\Bot\Api;
+  $telegram = new Api("680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE");
+  $result = $telegram -> getWebhookUpdates();
+  error_log(var_export($result, true));
 
   if ($text) {
     if ($text == startDialog) {
@@ -169,7 +172,4 @@
   }
 
  
-  use Telegram\Bot\Api;
-  $telegram = new Api("680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE");
-  $result = $telegram -> getWebhookUpdates();
-  error_log(var_export($result, true));
+ 
