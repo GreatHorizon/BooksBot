@@ -95,7 +95,6 @@
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
       }
-
       else {
         $reply = "Выберите команду";
       }
@@ -123,7 +122,6 @@
             return "Такая книга уже есть в библиотеке";
           }
         }
-
         addBookToHistory($bookInfo, $chatId);
         deleteInfo("commands", $chatId);
         return "Вы успешно добавили книгу в библиотеку!"; 
