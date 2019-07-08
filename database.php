@@ -37,7 +37,6 @@
       FIFTH_BOOK => $bookTitle
     ];
     return $newUser;
-    
   }
 
   function changeUserHistory(?int $chatId, ?string $bookTitle): array {
