@@ -43,7 +43,7 @@
     elseif ($text == "Очистить библиотеку") {
       deleteInfo(bookHistoryTable, $chatId);
       $reply = "Библиотека очищена!";
-      sendNewMessage($chatId, $replyMarkup, $telegram);
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Назад") {
