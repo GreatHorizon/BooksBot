@@ -31,7 +31,7 @@
   function addUserInfo($chatId, $bookTitle) { 
     $newUser = [
       USER_ID => $chatId,
-      firstBook => emptyField,
+      FIRST_BOOK => emptyField,
       SECOND_BOOK => emptyField,
       THIRD_BOOK => emptyField,
       FOURTH_BOOK => emptyField,
