@@ -52,7 +52,7 @@
     
   }
 
-  function changeUserHistory($chatId, $bookTitle): ?array {
+  function changeUserHistory($chatId, $bookTitle) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     deleteInfo(bookHistoryTable, $chatId);
     $userHistory = [
