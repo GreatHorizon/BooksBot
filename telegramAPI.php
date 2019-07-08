@@ -35,6 +35,6 @@
       return $result["message"]["from"]["username"]; //Юзернейм пользователя
   }
   
-  function sendNewMessage(int $chatId, string $reply, ?string $replyMarkup, Api $telegram): ?object {
+  function sendNewMessage(int $chatId, string $reply, ?string $replyMarkup, Api $telegram) {
       $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
     }
