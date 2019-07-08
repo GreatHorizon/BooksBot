@@ -1,6 +1,6 @@
 <?php
   require_once('const.php');
-  
+
   function addBookToHistory($bookTitle, $chatId) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
@@ -63,6 +63,7 @@
   function getBd() {
     return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
   }
+  
   function addCommand($chatId, $command) {
     $command = [
       "user_id" => $chatId,

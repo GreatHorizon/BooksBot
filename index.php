@@ -79,7 +79,7 @@
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
         }
         else {
-          $bookAuthor = emptySrting;
+          $bookAuthor = "";
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
       }
@@ -136,7 +136,6 @@
         else {
           return "Такой книги нет в вашей библиотеке!";
         }
-        
       }
       else {
         deleteInfo(COMMANDS_TABLE, $chatId);
