@@ -153,7 +153,7 @@
     return json_decode($bookInfo, true);
   }
 
-  function showHistory($chatId, $reply, $replyMarkup, $telegram) {
+  function showHistory($chatId, $replyMarkup, $telegram) {
     $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
     $reply = emptyLibraryReply;
     if ($bookHistory) {
