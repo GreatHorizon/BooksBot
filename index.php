@@ -37,20 +37,7 @@
 
     elseif ($text == "Показать библиотеку") {
       deleteInfo("commands", $chatId);
-      $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
-      $reply = emptyLibraryReply;
-      if ($bookHistory) {
-        $bookHistory = array_slice($bookHistory, 1);
-        foreach ($bookHistory as $books) {
-          if ($books != emptyField) {
-            $reply = $books;
-            sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-          }
-        }
-      }
-      if ($reply == emptyLibraryReply) {
-        sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-      }
+      showHistory($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Очистить библиотеку") {
@@ -166,4 +153,19 @@
     return json_decode($bookInfo, true);
   }
 
-  
+  function showHistory($chatId, $reply, $replyMarkup, $telegram) {
+    $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
+    $reply = emptyLibraryReply;
+    if ($bookHistory) {
+      $bookHistory = array_slice($bookHistory, 1);
+      foreach ($bookHistory as $books) {
+        if ($books != emptyField) {
+          $reply = $books;
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        }
+      }
+    }
+    if ($reply == emptyLibraryReply) {
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
+  }
