@@ -8,7 +8,7 @@
   const USER_ID = 'user_id';
   const COMMAND = "command";
   const COMMANDS_TABLE = "commands";
-  const BOOK_LIBRARY_TABLE = 'book_history';
+  const BOOK_LIBRARY_TABLE = 'book_library';
   const EMPTY_FIELD = 'empty';
   const DB_LOGIN = 'b5c433cc63ee73';
   const DB_NAME = 'heroku_2cd2894cd704696';
