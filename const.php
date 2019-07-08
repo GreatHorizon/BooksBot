@@ -21,4 +21,34 @@
   const MY_LIBRARY = "Моя библиотека";
   const BOOK_SEARCH_WARNING = "Книга не найдена, введите корректное название";
   const EMPTY_LIBRARY_REPLY = "Ваша библиотека пуста!";
+  const NOT_FOUND_LIBRALY_REPLY = "Такой книги нет в вашей библиотеке!";
+  const BOOK_REMOVED_REPLY = "Книга успешно удалена из библиотеки!";
+  const CHOOSE_FUNCTION_REPLY = "Выберите функцию";
+  const SHOW_LIBRARY_COMMAND = "Показать библиотеку";
+  const CLEANING_LIBRARY_COMMAND = "Очистить библиотеку";
+  const MOVE_BACK_COMMAND = "Назад";
+  const LIBRARY_WAS_CLINED_REPLY = "Библиотека очищена!";
+  const SEARCH_BOOK_COMMAND = "Найти книгу";
+  const SEARCH_BOOK_COMMAND_REPLY = "Этот бот может найти книгу по названию(для этого введите название книги)\nДля большей точности в поиске, в первую строку введите название книги, во второй автора, таким образом:\nМы\nЗамятин";
+  const ADD_BOOK_COMMAND = "Добавить книгу";
+  const ADD_BOOK_REPLY = "Какую книгу вы хотите добавить?";
+  const REMOVE_BOOK_COMMAND = "Удалить книгу";
+  const REMOVE_BOOK_REPLY = "Какую книгу вы хотите удалить?";
+  const SEARCH_STATEMENT = "search";
+  const ADD_STATEMENT = "add";
+  const REMOVE_STATEMENT = "remove";
+  const SUCESSFUL_BOOK_ADDING_REPLY = "Вы успешно добавили книгу в библиотеку!";
+  const BOOK_IN_LIBRARY_REPLY = "Такая книга уже есть в библиотеке";
+  
+
+
+
+
+
+
+
+
+  
+  
+
   

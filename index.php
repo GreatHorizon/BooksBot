@@ -20,49 +20,49 @@
     }
 
     elseif ($text == MY_LIBRARY) {
-      $reply = "Выберите функцию";
+      $reply = CHOOSE_FUNCTION_REPLY;
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo(COMMANDS_TABLE, $chatId);
     }
 
-    elseif ($text == "Показать библиотеку") {
+    elseif ($text == SHOW_LIBRARY_COMMAND) {
       deleteInfo(COMMANDS_TABLE, $chatId);
       showLibrary($chatId, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Очистить библиотеку") {
+    elseif ($text == CLEANING_LIBRARY_COMMAND) {
       deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
-      $reply = "Библиотека очищена!";
+      $reply = LIBRARY_WAS_CLINED_REPLY;
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Назад") {
-      $reply = "Choose command";
+    elseif ($text == MOVE_BACK_COMMAND) {
+      $reply = CHOOSE_FUNCTION_REPLY;
       deleteInfo(COMMANDS_TABLE, $chatId);
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Найти книгу") {
-      updateCommand(COMMANDS_TABLE, $chatId, "search");
-      $reply = "Этот бот может найти книгу по названию(для этого введите название книги)\nДля большей точности в поиске, в первую строку введите название книги, во второй автора, таким образом:\nМы\nЗамятин";
+    elseif ($text == SEARCH_BOOK_COMMAND) {
+      updateCommand(COMMANDS_TABLE, $chatId, SEARCH_STATEMENT);
+      $reply = SEARCH_BOOK_COMMAND_REPLY;
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
-    elseif ($text == "Добавить книгу") {
-      updateCommand(COMMANDS_TABLE, $chatId, "add");
-      $reply = "Какую книгу вы хотите добавить?";
+    elseif ($text == ADD_BOOK_COMMAND) {
+      updateCommand(COMMANDS_TABLE, $chatId, ADD_STATEMENT);
+      $reply = ADD_BOOK_REPLY;
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
-    elseif ($text == "Удалить книгу") {
-      updateCommand(COMMANDS_TABLE, $chatId, "remove");
-      $reply = "Какую книгу вы хотите удалить?";
+    elseif ($text == REMOVE_BOOK_COMMAND) {
+      updateCommand(COMMANDS_TABLE, $chatId, REMOVE_STATEMENT);
+      $reply = REMOVE_BOOK_REPLY;
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
     else {
       $commands = getInfoFromTable(COMMANDS_TABLE, $chatId)["command"];
-      if ($commands == "add" or $commands == "search" or $commands == "remove") {
+      if ($commands == ADD_STATEMENT or $commands == SEARCH_STATEMENT or $commands == REMOVE_STATEMENT) {
         if (strpos($text, LINE_BREAK)) {
           $text = explode(LINE_BREAK, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
@@ -73,7 +73,7 @@
         }
       }
       else {
-        $reply = "Выберите команду";
+        $reply = CHOOSE_FUNCTION_REPLY;
       }
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
@@ -91,20 +91,20 @@
       $authors = $bookInfo["items"][0]["volumeInfo"]["authors"][0];
       $bookInfo = $bookInfo["items"][0]["volumeInfo"]["infoLink"];
 
-      if ($commands == "add") {
+      if ($commands == ADD_STATEMENT) {
         $booksArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
             deleteInfo(COMMANDS_TABLE, $chatId);
-            return "Такая книга уже есть в библиотеке";
+            return BOOK_IN_LIBRARY_REPLY;
           }
         }
         addBookToHistory($bookInfo, $chatId);
         deleteInfo(COMMANDS_TABLE, $chatId);
-        return "Вы успешно добавили книгу в библиотеку!"; 
+        return SUCESSFUL_BOOK_ADDING_REPLY; 
       }
 
-      elseif ($commands == "remove") {
+      elseif ($commands == REMOVE_STATEMENT) {
         $booksArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
         deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
         $deleteBook = false;
@@ -120,10 +120,10 @@
           insertToBase(BOOK_LIBRARY_TABLE, $booksArray);
           deleteInfo(COMMANDS_TABLE, $chatId);
           if ($deleteBook) {
-            return "Книга успешно удалена из библиотеки!";
+            return BOOK_REMOVED_REPLY;
           }
           else {
-            return "Такой книги нет в вашей библиотеке!";
+            return NOT_FOUND_LIBRALY_REPLY;
           }
         }
         else {
