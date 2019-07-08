@@ -32,10 +32,10 @@
     $newUser = [
       userId => $chatId,
       firstBook => emptyField,
-      secondBook => emptyField,
-      thirdBook => emptyField,
-      fourthBook => emptyField,
-      fifthBook => $bookTitle
+      SECOND_BOOK => emptyField,
+      THIRD_BOOK => emptyField,
+      FOURTH_BOOK => emptyField,
+      FIFTH_BOOK => $bookTitle
     ];
     return $newUser;
     
@@ -46,11 +46,11 @@
     deleteInfo(bookHistoryTable, $chatId);
     $userHistory = [
       userId => $chatId,
-      firstBook => $bookHistoryArray[secondBook],
-      secondBook => $bookHistoryArray[thirdBook],
-      thirdBook => $bookHistoryArray[fourthBook],
-      fourthBook => $bookHistoryArray[fifthBook],
-      fifthBook => $bookTitle,
+      FIRST_BOOK => $bookHistoryArray[SECOND_BOOK],
+      SECOND_BOOK => $bookHistoryArray[THIRD_BOOK],
+      THIRD_BOOK => $bookHistoryArray[FOURTH_BOOK],
+      FOURTH_BOOK => $bookHistoryArray[FIFTH_BOOK],
+      FIFTH_BOOK => $bookTitle,
     ];
     return $userHistory;
   }
@@ -65,8 +65,8 @@
   }
   function addCommand($chatId, $command) {
     $command = [
-      "user_id" => $chatId,
-      "command" => $command,
+      USER_ID => $chatId,
+      COMMAND => $command,
     ];
     insertToBase("commands", $command);
   }

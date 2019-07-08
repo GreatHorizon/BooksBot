@@ -1,11 +1,12 @@
 <?php
-  const apiToken = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
-  const firstBook = 'first_book_slot';
-  const secondBook = 'second_book_slot';
-  const thirdBook = 'third_book_slot';
-  const fourthBook = 'fourth_book_slot';
-  const fifthBook = 'fifth_book_slot';
-  const userId = 'user_id';
+  const API_TOKEN = "680225339:AAFoHWnPG5KVG_9lD8IrbbBhqDmhYxtKyKE";
+  const FIRST_BOOK = 'first_book_slot';
+  const SECOND_BOOK = 'second_book_slot';
+  const THIRD_BOOK = 'third_book_slot';
+  const FOURTH_BOOK = 'fourth_book_slot';
+  const FIFTH_BOOK = 'fifth_book_slot';
+  const USER_ID = 'user_id';
+  const COMMAND = "command";
   const emptyField = 'empty';
   const bookHistoryTable = 'book_history';
   const dataBaseLogin = 'b5c433cc63ee73';
