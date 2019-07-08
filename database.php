@@ -17,20 +17,20 @@
   function getInfoFromTable($table, $chatId)
   {
     $db = getBd();
-    $db->where(userId, $chatId);
+    $db->where(USER_ID, $chatId);
     $bookHistoryArray = $db->getOne($table);
     return $bookHistoryArray;
   }
 
   function deleteInfo($table, $chatId) {
     $db = getBd();
-    $db->where(userId, $chatId);
+    $db->where(USER_ID, $chatId);
     $db->delete($table);
   }
 
   function addUserInfo($chatId, $bookTitle) { 
     $newUser = [
-      userId => $chatId,
+      USER_ID => $chatId,
       firstBook => emptyField,
       SECOND_BOOK => emptyField,
       THIRD_BOOK => emptyField,
@@ -45,7 +45,7 @@
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     deleteInfo(bookHistoryTable, $chatId);
     $userHistory = [
-      userId => $chatId,
+      USER_ID => $chatId,
       FIRST_BOOK => $bookHistoryArray[SECOND_BOOK],
       SECOND_BOOK => $bookHistoryArray[THIRD_BOOK],
       THIRD_BOOK => $bookHistoryArray[FOURTH_BOOK],
