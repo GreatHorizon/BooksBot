@@ -119,21 +119,26 @@
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         deleteInfo(bookHistoryTable, $chatId);
         $deleteBook = false;
-        foreach ($booksArray as $book) {
-          if ($book == $bookInfo)
-          {
-            $booksArray[key($booksArray)] = emptyField;
-            $deleteBook = true;
+        if ($booksArray) {
+          foreach ($booksArray as $book) {
+            if ($book == $bookInfo)
+            {
+              $booksArray[key($booksArray)] = emptyField;
+              $deleteBook = true;
+            }
+            next($booksArray);
           }
-          next($booksArray);
-        }
-        insertToBase(bookHistoryTable, $booksArray);
-        deleteInfo("commands", $chatId);
-        if ($deleteBook) {
-          return "Книга успешно удалена из библиотеки!";
+          insertToBase(bookHistoryTable, $booksArray);
+          deleteInfo("commands", $chatId);
+          if ($deleteBook) {
+            return "Книга успешно удалена из библиотеки!";
+          }
+          else {
+            return "Такой книги нет в вашей библиотеке!";
+          }
         }
         else {
-          return "Такой книги нет в вашей библиотеке!";
+          return "Ваша библиотека пуста!";
         }
       }
       else {
