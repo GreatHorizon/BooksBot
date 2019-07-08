@@ -19,7 +19,7 @@
       deleteInfo(COMMANDS_TABLE, $chatId);
     }
 
-    elseif ($text == myLibrary) {
+    elseif ($text == MY_LIBRARY_COMMAND) {
       $reply = "Выберите команду";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
       deleteInfo(COMMANDS_TABLE, $chatId);

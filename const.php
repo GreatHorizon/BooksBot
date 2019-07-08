@@ -18,4 +18,5 @@
   const dataBaseName = 'heroku_2cd2894cd704696';
   const dataBasePassword = '290309dc';
   const dataBaseHost = 'eu-cdbr-west-02.cleardb.net';
-  const COMMANDS_TABLE = 'commands';
+  const COMMANDS_TABLE = "commands";
+  const MY_LIBRARY_COMMAND = ""
