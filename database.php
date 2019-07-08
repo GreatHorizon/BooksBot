@@ -1,6 +1,17 @@
 <?php
-  require_once('const.php');
-
+  const firstBook = 'first_book_slot';
+  const secondBook = 'second_book_slot';
+  const thirdBook = 'third_book_slot';
+  const fourthBook = 'fourth_book_slot';
+  const fifthBook = 'fifth_book_slot';
+  const userId = 'user_id';
+  const emptyField = 'empty';
+  const bookHistoryTable = 'book_history';
+  const dataBaseLogin = 'b5c433cc63ee73';
+  const dataBaseName = 'heroku_2cd2894cd704696';
+  const dataBasePassword = '290309dc';
+  const dataBaseHost = 'eu-cdbr-west-02.cleardb.net';
+  
   function addBookToHistory($bookTitle, $chatId) {
     $bookHistoryArray = getInfoFromTable(bookHistoryTable, $chatId);
     if ($bookHistoryArray) {
@@ -63,7 +74,6 @@
   function getBd() {
     return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
   }
-  
   function addCommand($chatId, $command) {
     $command = [
       "user_id" => $chatId,
