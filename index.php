@@ -166,3 +166,7 @@
     }
     return json_decode($bookInfo, true);
   }
+
+  register_shutdown_function(function () {
+    http_response_code(200);
+  });
