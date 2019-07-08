@@ -19,4 +19,4 @@
   const dataBasePassword = '290309dc';
   const dataBaseHost = 'eu-cdbr-west-02.cleardb.net';
   const COMMANDS_TABLE = "commands";
-  const MY_LIBRARY_COMMAND = ""
+  const MY_LIBRARY_COMMAND = "Моя библиотека";
