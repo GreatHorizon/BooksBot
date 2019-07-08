@@ -20,3 +20,4 @@
   const dataBaseHost = 'eu-cdbr-west-02.cleardb.net';
   const COMMANDS_TABLE = "commands";
   const MY_LIBRARY_COMMAND = "Моя библиотека";
+  const SHOW_LIBRARY_COMMAND = "Показать библиотеку";
