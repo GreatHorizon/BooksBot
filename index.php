@@ -8,7 +8,7 @@
   if ($text) {
     if ($text == startDialog) {
 
-      if ($name != emptySrting) {
+      if ($name != EMPTY_STRING) {
         $reply = welcoming . $name . "!";
       }
 
@@ -63,12 +63,12 @@
     else {
       $commands = getInfoFromTable(COMMANDS_TABLE, $chatId)["command"];
       if ($commands == "add" or $commands == "search" or $commands == "remove") {
-        if (strpos($text, lineBreak)) {
-          $text = explode(lineBreak, $text);
+        if (strpos($text, LINE_BREAK)) {
+          $text = explode(LINE_BREAK, $text);
           $reply = getResponseText($text[0], $text[1], $chatId, $commands);
         }
         else {
-          $bookAuthor = emptySrting;
+          $bookAuthor = EMPTY_STRING;
           $reply = getResponseText($text, $bookAuthor, $chatId, $commands);
         }
       }
@@ -112,7 +112,7 @@
           foreach ($booksArray as $book) {
             if ($book == $bookInfo)
             {
-              $booksArray[key($booksArray)] = emptyField;
+              $booksArray[key($booksArray)] = EMPTY_FIELD;
               $deleteBook = true;
             }
             next($booksArray);

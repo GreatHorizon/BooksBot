@@ -9,16 +9,14 @@
   const COMMAND = "command";
   const COMMANDS_TABLE = "commands";
   const BOOK_LIBRARY_TABLE = 'book_history';
-  const emptyField = 'empty';
+  const EMPTY_FIELD = 'empty';
+  const DB_LOGIN = 'b5c433cc63ee73';
+  const DB_NAME = 'heroku_2cd2894cd704696';
+  const DB_PASSWORD = '290309dc';
+  const DB_HOST = 'eu-cdbr-west-02.cleardb.net';
+  const LINE_BREAK = "\n";
+  const EMPTY_STRING = "";
   
-  const dataBaseLogin = 'b5c433cc63ee73';
-  const dataBaseName = 'heroku_2cd2894cd704696';
-  const dataBasePassword = '290309dc';
-  const dataBaseHost = 'eu-cdbr-west-02.cleardb.net';
-  const lineBreak = "\n";
-  const emptySrting = "";
-  const blank = " ";
-  const plus = "+";
   const welcoming = "Добро пожаловать, ";
   const startDialog = "/start";
   const help = "Помощь";

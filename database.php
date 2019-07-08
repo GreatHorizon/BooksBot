@@ -31,10 +31,10 @@
   function addUserInfo($chatId, $bookTitle) { 
     $newUser = [
       USER_ID => $chatId,
-      FIRST_BOOK => emptyField,
-      SECOND_BOOK => emptyField,
-      THIRD_BOOK => emptyField,
-      FOURTH_BOOK => emptyField,
+      FIRST_BOOK => EMPTY_FIELD,
+      SECOND_BOOK => EMPTY_FIELD,
+      THIRD_BOOK => EMPTY_FIELD,
+      FOURTH_BOOK => EMPTY_FIELD,
       FIFTH_BOOK => $bookTitle
     ];
     return $newUser;
@@ -61,7 +61,7 @@
   }
 
   function getBd() {
-    return new MysqliDb (dataBaseHost, dataBaseLogin, dataBasePassword, dataBaseName);
+    return new MysqliDb (DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME);
   }
   function addCommand($chatId, $command) {
     $command = [
@@ -82,7 +82,7 @@
     if ($bookHistory) {
       $bookHistory = array_slice($bookHistory, 1);
       foreach ($bookHistory as $books) {
-        if ($books != emptyField) {
+        if ($books != EMPTY_FIELD) {
           $reply = $books;
           sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
         }
