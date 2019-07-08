@@ -2,42 +2,31 @@
   require 'vendor/autoload.php';
   require_once('telegramAPI.php');
   require_once('database.php');
+  require_once('const.php');
   
-
-  const lineBreak = "\n";
-  const emptySrting = "";
-  const blank = " ";
-  const plus = "+";
-  const welcoming = "Добро пожаловать, ";
-  const startDialog = "/start";
-  const myLibrary = "Моя библиотека";
-  const bookSearchWarning = "Книга не найдена, введите корректное название";
-  const emptyLibraryReply = "Ваша библиотека пуста!";
-
-  
-
   if ($text) {
     if ($text == startDialog) {
 
-      if ($name != emptySrting) {
-        $reply = welcoming . $name . "!";
+      if ($name != "") {
+        $reply = WELCOMING . $name . "!";
       }
 
       else {
-        $reply = welcoming . ", Незнакомец!";
+        $reply = WELCOMING . ", Незнакомец!";
       }
+
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-      deleteInfo("commands", $chatId);
+      deleteInfo(COMMANDS_TABLE, $chatId);
     }
 
     elseif ($text == myLibrary) {
-      $reply = "Выберите функцию";
+      $reply = "Выберите команду";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
-      deleteInfo("commands", $chatId);
+      deleteInfo(COMMANDS_TABLE, $chatId);
     }
 
     elseif ($text == "Показать библиотеку") {
-      deleteInfo("commands", $chatId);
+      deleteInfo(COMMANDS_TABLE, $chatId);
       $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
       $bookHistory = array_slice($bookHistory, 1);
       $reply = emptyLibraryReply;
@@ -59,31 +48,31 @@
     }
 
     elseif ($text == "Назад") {
-      $reply = "Choose command";
-      deleteInfo("commands", $chatId);
+      $reply = "Выберите команду";
+      deleteInfo(COMMANDS_TABLE, $chatId);
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Найти книгу") {
-      updateCommand("commands", $chatId, "search");
+      updateCommand(COMMANDS_TABLE, $chatId, "search");
       $reply = "Этот бот может найти книгу по названию(для этого введите название книги)\nДля большей точности в поиске, в первую строку введите название книги, во второй автора, таким образом:\nМы\nЗамятин";
       sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Добавить книгу") {
-      updateCommand("commands", $chatId, "add");
+      updateCommand(COMMANDS_TABLE, $chatId, "add");
       $reply = "Какую книгу вы хотите добавить?";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
     elseif ($text == "Удалить книгу") {
-      updateCommand("commands", $chatId, "remove");
+      updateCommand(COMMANDS_TABLE, $chatId, "remove");
       $reply = "Какую книгу вы хотите удалить?";
       sendNewMessage($chatId, $reply, $libraryKeyboardMarkUp, $telegram);
     }
 
     else {
-      $commands = getInfoFromTable("commands", $chatId)["command"];
+      $commands = getInfoFromTable(COMMANDS_TABLE, $chatId)["command"];
       if ($commands == "add" or $commands == "search" or $commands == "remove") {
         if (strpos($text, lineBreak)) {
           $text = explode(lineBreak, $text);
@@ -118,13 +107,13 @@
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         foreach ($booksArray as $book) {
           if ($book == $bookInfo){
-            deleteInfo("commands", $chatId);
+            deleteInfo(COMMANDS_TABLE, $chatId);
             return "Такая книга уже есть в библиотеке";
           }
         }
 
         addBookToHistory($bookInfo, $chatId);
-        deleteInfo("commands", $chatId);
+        deleteInfo(COMMANDS_TABLE, $chatId);
         return "Вы успешно добавили книгу в библиотеку!"; 
       }
       elseif ($commands == "remove") {
@@ -140,7 +129,7 @@
           next($booksArray);
         }
         insertToBase(bookHistoryTable, $booksArray);
-        deleteInfo("commands", $chatId);
+        deleteInfo(COMMANDS_TABLE, $chatId);
         if ($deleteBook) {
           return "Книга успешно удалена из библиотеки!";
         }
@@ -150,7 +139,7 @@
         
       }
       else {
-        deleteInfo("commands", $chatId);
+        deleteInfo(COMMANDS_TABLE, $chatId);
         return "Название: " . $bookTitle ."\nАвтор: ". $authors . " \nУзнать больше информации о книге: " . $bookInfo . "";
       }
     }
@@ -158,7 +147,7 @@
 
   function getBookInfo($bookName, $bookAuthor, $chatId) { 
     $bookName = str_replace(' ', '+', $bookName);
-    if ($bookAuthor == emptySrting) {
+    if ($bookAuthor == '') {
       $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
     }
     else {
