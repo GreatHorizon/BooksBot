@@ -76,7 +76,7 @@
     addCommand($chatId, $command);
   }
   
-  function showLibrary(?int $chatId, string $replyMarkup, Api $telegram): void {
+  function showLibrary(?int $chatId, string $replyMarkup, $telegram): void {
     $bookHistory = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     $reply = EMPTY_LIBRARY_REPLY;
     if ($bookHistory) {
