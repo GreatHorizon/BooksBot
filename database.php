@@ -1,7 +1,7 @@
 <?php
   require_once('const.php');
   
-  function addBookToHistory($bookTitle, $chatId) {
+  function addBookToHistory(string $bookTitle, ?int $chatId): void {
     $bookHistoryArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     if ($bookHistoryArray) {
       $updatedUserInfo = changeUserHistory($chatId, $bookTitle);
@@ -14,21 +14,20 @@
     }
   }
 
-  function getInfoFromTable($table, $chatId)
-  {
+  function getInfoFromTable(string $table, ?int $chatId): array {
     $db = getBd();
     $db->where(USER_ID, $chatId);
     $bookHistoryArray = $db->getOne($table);
     return $bookHistoryArray;
   }
 
-  function deleteInfo($table, $chatId) {
+  function deleteInfo(string $table, ?int $chatId): void {
     $db = getBd();
     $db->where(USER_ID, $chatId);
     $db->delete($table);
   }
 
-  function addUserInfo($chatId, $bookTitle) { 
+  function addUserInfo(?int $chatId, ?string $bookTitle) : array { 
     $newUser = [
       USER_ID => $chatId,
       FIRST_BOOK => EMPTY_FIELD,
@@ -41,7 +40,7 @@
     
   }
 
-  function changeUserHistory($chatId, $bookTitle) {
+  function changeUserHistory(?int $chatId, ?string $bookTitle): array {
     $bookHistoryArray = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     deleteInfo(BOOK_LIBRARY_TABLE, $chatId);
     $userHistory = [
@@ -55,15 +54,16 @@
     return $userHistory;
   }
 
-  function insertToBase($table, $addingPart) {
+  function insertToBase(string $table, array $addingPart): void {
     $db = getBd();
     $db->insert($table, $addingPart);
   }
 
-  function getBd() {
+  function getBd(): MysqliDb {
     return new MysqliDb (DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME);
   }
-  function addCommand($chatId, $command) {
+
+  function addCommand(?int $chatId, string $command): void {
     $command = [
       USER_ID => $chatId,
       COMMAND => $command,
@@ -71,12 +71,12 @@
     insertToBase(COMMANDS_TABLE, $command);
   }
 
-  function updateCommand($table, $chatId, $command) {
+  function updateCommand(string $table, ?int $chatId, string $command): void {
     deleteInfo(COMMANDS_TABLE, $chatId);
     addCommand($chatId, $command);
   }
   
-  function showLibrary($chatId, $replyMarkup, $telegram) {
+  function showLibrary(?int $chatId, string $replyMarkup, Api $telegram): void {
     $bookHistory = getInfoFromTable(BOOK_LIBRARY_TABLE, $chatId);
     $reply = EMPTY_LIBRARY_REPLY;
     if ($bookHistory) {
