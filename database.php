@@ -14,7 +14,7 @@
     }
   }
 
-  function getInfoFromTable(string $table, ?int $chatId): array {
+  function getInfoFromTable(string $table, ?int $chatId) {
     $db = getBd();
     $db->where(USER_ID, $chatId);
     $bookHistoryArray = $db->getOne($table);
