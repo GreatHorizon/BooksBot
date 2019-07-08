@@ -2,6 +2,7 @@
   require 'vendor/autoload.php';
   require_once('telegramAPI.php');
   require_once('database.php');
+  require_once('googleAPI.php');
   
 
   const lineBreak = "\n";
@@ -37,7 +38,7 @@
 
     elseif ($text == "Показать библиотеку") {
       deleteInfo("commands", $chatId);
-      showHistory($chatId, $replyMarkup, $telegram);
+      showLibrary($chatId, $replyMarkup, $telegram);
     }
 
     elseif ($text == "Очистить библиотеку") {
@@ -113,6 +114,7 @@
         deleteInfo("commands", $chatId);
         return "Вы успешно добавили книгу в библиотеку!"; 
       }
+
       elseif ($commands == "remove") {
         $booksArray = getInfoFromTable(bookHistoryTable, $chatId);
         deleteInfo(bookHistoryTable, $chatId);
@@ -133,7 +135,6 @@
         else {
           return "Такой книги нет в вашей библиотеке!";
         }
-        
       }
       else {
         deleteInfo("commands", $chatId);
@@ -142,30 +143,4 @@
     }
   }
 
-  function getBookInfo($bookName, $bookAuthor, $chatId) { 
-    $bookName = str_replace(' ', '+', $bookName);
-    if ($bookAuthor == emptySrting) {
-      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
-    }
-    else {
-      $bookInfo = file_get_contents('https://www.googleapis.com/books/v1/volumes?q=intitle:'. $bookName .'+inauthor:'. $bookAuthor .'&maxResults=1&orderBy=relevance&key=AIzaSyALM0SWc1JdHtgpPplJ6T2k9Fwcc1dI7vk');
-    }
-    return json_decode($bookInfo, true);
-  }
-
-  function showHistory($chatId, $replyMarkup, $telegram) {
-    $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
-    $reply = emptyLibraryReply;
-    if ($bookHistory) {
-      $bookHistory = array_slice($bookHistory, 1);
-      foreach ($bookHistory as $books) {
-        if ($books != emptyField) {
-          $reply = $books;
-          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-        }
-      }
-    }
-    if ($reply == emptyLibraryReply) {
-      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
-    }
-  }
+  

@@ -87,3 +87,19 @@
     addCommand($chatId, $command);
   }
   
+  function showLibrary($chatId, $replyMarkup, $telegram) {
+    $bookHistory = getInfoFromTable(bookHistoryTable, $chatId);
+    $reply = emptyLibraryReply;
+    if ($bookHistory) {
+      $bookHistory = array_slice($bookHistory, 1);
+      foreach ($bookHistory as $books) {
+        if ($books != emptyField) {
+          $reply = $books;
+          sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+        }
+      }
+    }
+    if ($reply == emptyLibraryReply) {
+      sendNewMessage($chatId, $reply, $replyMarkup, $telegram);
+    }
+  }
